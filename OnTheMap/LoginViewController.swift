@@ -18,20 +18,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
      var appDelegate: AppDelegate!
      var session: NSURLSession!
      
-     
      override func viewDidLoad() {
           super.viewDidLoad()
           
           usernameTextField.delegate = self
           passwordTextField.delegate = self
           
-          
           // Get the app delegate
           appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
           
           // Get the shared URL session
           session = NSURLSession.sharedSession()
-   
      }
      
      override func viewDidAppear(animated: Bool) {
@@ -39,8 +36,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           self.debugTextLabel.text = ""
      }
      
-
-
      func textFieldShouldReturn(textField: UITextField) -> Bool {
           if usernameTextField.isFirstResponder() || passwordTextField.isFirstResponder() {
                usernameTextField.resignFirstResponder()
@@ -64,21 +59,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                
                if success {
                     println("YAY!")
+                    
+                    // TODO:  GET STUDENT DATA
                     // transition to tab controller
                     // self.completeLogin()
                }
                else {
+                    println("Login Error")
                     println(error)
+                    
+                    // shake the screen
+                    dispatch_async(dispatch_get_main_queue(), {
+                         self.loginFailShake()
+                    })
+
+                    // TODO: parse error to provide friendly debug lable code
                     self.displayError(error)
                }
-
-               
           }
-          
-          
-          
-               
-          
      }
      
      // Login Successful, Move to Tab Bar Controller
@@ -98,6 +96,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                }
           })
      }
-
+     
+     // Shake the screen if login failure
+     func loginFailShake() {
+          let anim = CAKeyframeAnimation( keyPath:"transform" )
+          anim.values = [
+               NSValue( CATransform3D:CATransform3DMakeTranslation(-5, 0, 0 ) ),
+               NSValue( CATransform3D:CATransform3DMakeTranslation( 5, 0, 0 ) )
+          ]
+          anim.autoreverses = true
+          anim.repeatCount = 2
+          anim.duration = 7/100
+          
+          self.view.layer.addAnimation(anim, forKey: nil)
+     }
 }
-
