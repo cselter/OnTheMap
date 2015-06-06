@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		9DE931CE1B2368A800C5AD86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931CD1B2368A800C5AD86 /* AppDelegate.swift */; };
-		9DE931D01B2368A800C5AD86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931CF1B2368A800C5AD86 /* ViewController.swift */; };
-		9DE931D31B2368A800C5AD86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DE931D11B2368A800C5AD86 /* Main.storyboard */; };
 		9DE931D51B2368A800C5AD86 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DE931D41B2368A800C5AD86 /* Images.xcassets */; };
 		9DE931D81B2368A800C5AD86 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE931D61B2368A800C5AD86 /* LaunchScreen.xib */; };
 		9DE931E41B2368A800C5AD86 /* OnTheMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931E31B2368A800C5AD86 /* OnTheMapTests.swift */; };
+		9DE931EF1B2369D800C5AD86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931ED1B2369D800C5AD86 /* LoginViewController.swift */; };
+		9DE931F01B2369D800C5AD86 /* OTMclient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931EE1B2369D800C5AD86 /* OTMclient.swift */; };
+		9DE931F41B236ADB00C5AD86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DE931F31B236ADB00C5AD86 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +30,14 @@
 		9DE931C81B2368A800C5AD86 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DE931CC1B2368A800C5AD86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DE931CD1B2368A800C5AD86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9DE931CF1B2368A800C5AD86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		9DE931D21B2368A800C5AD86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9DE931D41B2368A800C5AD86 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9DE931D71B2368A800C5AD86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		9DE931DD1B2368A800C5AD86 /* OnTheMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnTheMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DE931E21B2368A800C5AD86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DE931E31B2368A800C5AD86 /* OnTheMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheMapTests.swift; sourceTree = "<group>"; };
+		9DE931ED1B2369D800C5AD86 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		9DE931EE1B2369D800C5AD86 /* OTMclient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMclient.swift; sourceTree = "<group>"; };
+		9DE931F31B236ADB00C5AD86 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,9 +80,10 @@
 			isa = PBXGroup;
 			children = (
 				9DE931CD1B2368A800C5AD86 /* AppDelegate.swift */,
-				9DE931CF1B2368A800C5AD86 /* ViewController.swift */,
-				9DE931D11B2368A800C5AD86 /* Main.storyboard */,
+				9DE931F11B236A5B00C5AD86 /* Model */,
+				9DE931F21B236A6E00C5AD86 /* Controller */,
 				9DE931D41B2368A800C5AD86 /* Images.xcassets */,
+				9DE931F31B236ADB00C5AD86 /* Main.storyboard */,
 				9DE931D61B2368A800C5AD86 /* LaunchScreen.xib */,
 				9DE931CB1B2368A800C5AD86 /* Supporting Files */,
 			);
@@ -110,6 +113,22 @@
 				9DE931E21B2368A800C5AD86 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9DE931F11B236A5B00C5AD86 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9DE931EE1B2369D800C5AD86 /* OTMclient.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9DE931F21B236A6E00C5AD86 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9DE931ED1B2369D800C5AD86 /* LoginViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,9 +211,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DE931D31B2368A800C5AD86 /* Main.storyboard in Resources */,
 				9DE931D81B2368A800C5AD86 /* LaunchScreen.xib in Resources */,
 				9DE931D51B2368A800C5AD86 /* Images.xcassets in Resources */,
+				9DE931F41B236ADB00C5AD86 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,7 +231,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DE931D01B2368A800C5AD86 /* ViewController.swift in Sources */,
+				9DE931EF1B2369D800C5AD86 /* LoginViewController.swift in Sources */,
+				9DE931F01B2369D800C5AD86 /* OTMclient.swift in Sources */,
 				9DE931CE1B2368A800C5AD86 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,14 +256,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		9DE931D11B2368A800C5AD86 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9DE931D21B2368A800C5AD86 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		9DE931D61B2368A800C5AD86 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -409,6 +421,7 @@
 				9DE931E91B2368A800C5AD86 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9DE931EA1B2368A800C5AD86 /* Build configuration list for PBXNativeTarget "OnTheMapTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +430,7 @@
 				9DE931EC1B2368A800C5AD86 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
