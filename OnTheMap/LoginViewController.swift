@@ -41,7 +41,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                usernameTextField.resignFirstResponder()
                passwordTextField.resignFirstResponder()
           }
-          
           return true
      }
      
@@ -61,8 +60,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     println("YAY!")
                     
                     // TODO:  GET STUDENT DATA
+                    
                     // transition to tab controller
-                    // self.completeLogin()
+                    self.completeLogin()
                }
                else {
                     println("Login Error")
@@ -84,7 +84,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           dispatch_async(dispatch_get_main_queue(), {
                self.debugTextLabel.text = "Login Success!"
                let controller = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+               
                self.presentViewController(controller, animated: true, completion: nil)
+
           })
      }
      
@@ -95,6 +97,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     self.debugTextLabel.text = errorString
                }
           })
+     }
+     
+     // Open Udacity Sign Up Page
+     @IBAction func signUpButton(sender: AnyObject) {
+          if let url = NSURL(string: "https://www.udacity.com/account/auth#!/signup") {
+               UIApplication.sharedApplication().openURL(url)
+          }
      }
      
      // Shake the screen if login failure

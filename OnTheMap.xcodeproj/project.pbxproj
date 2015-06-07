@@ -14,6 +14,9 @@
 		9DE931EF1B2369D800C5AD86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931ED1B2369D800C5AD86 /* LoginViewController.swift */; };
 		9DE931F01B2369D800C5AD86 /* OTMclient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931EE1B2369D800C5AD86 /* OTMclient.swift */; };
 		9DE931F41B236ADB00C5AD86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DE931F31B236ADB00C5AD86 /* Main.storyboard */; };
+		9DE931F61B237B0100C5AD86 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931F51B237B0100C5AD86 /* TabBarController.swift */; };
+		9DE931F81B2497D200C5AD86 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931F71B2497D200C5AD86 /* MapViewController.swift */; };
+		9DE931FA1B249FDF00C5AD86 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931F91B249FDF00C5AD86 /* TableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +41,9 @@
 		9DE931ED1B2369D800C5AD86 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9DE931EE1B2369D800C5AD86 /* OTMclient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMclient.swift; sourceTree = "<group>"; };
 		9DE931F31B236ADB00C5AD86 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		9DE931F51B237B0100C5AD86 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		9DE931F71B2497D200C5AD86 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		9DE931F91B249FDF00C5AD86 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,9 +88,9 @@
 				9DE931CD1B2368A800C5AD86 /* AppDelegate.swift */,
 				9DE931F11B236A5B00C5AD86 /* Model */,
 				9DE931F21B236A6E00C5AD86 /* Controller */,
-				9DE931D41B2368A800C5AD86 /* Images.xcassets */,
 				9DE931F31B236ADB00C5AD86 /* Main.storyboard */,
 				9DE931D61B2368A800C5AD86 /* LaunchScreen.xib */,
+				9DE931D41B2368A800C5AD86 /* Images.xcassets */,
 				9DE931CB1B2368A800C5AD86 /* Supporting Files */,
 			);
 			path = OnTheMap;
@@ -126,7 +132,10 @@
 		9DE931F21B236A6E00C5AD86 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9DE931F71B2497D200C5AD86 /* MapViewController.swift */,
+				9DE931F91B249FDF00C5AD86 /* TableViewController.swift */,
 				9DE931ED1B2369D800C5AD86 /* LoginViewController.swift */,
+				9DE931F51B237B0100C5AD86 /* TabBarController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -232,7 +241,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DE931EF1B2369D800C5AD86 /* LoginViewController.swift in Sources */,
+				9DE931FA1B249FDF00C5AD86 /* TableViewController.swift in Sources */,
+				9DE931F61B237B0100C5AD86 /* TabBarController.swift in Sources */,
 				9DE931F01B2369D800C5AD86 /* OTMclient.swift in Sources */,
+				9DE931F81B2497D200C5AD86 /* MapViewController.swift in Sources */,
 				9DE931CE1B2368A800C5AD86 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

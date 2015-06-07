@@ -35,9 +35,6 @@ class OTMclient : NSObject {
           request.addValue("application/json", forHTTPHeaderField: "Content-Type")
           request.HTTPBody = "{\"udacity\": {\"username\": \"\(udacityLogin)\", \"password\": \"\(password)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
           
-          println(udacityLogin)
-          println(password)
-          
           let session = NSURLSession.sharedSession()
           let task = session.dataTaskWithRequest(request) { data, response, error in
                if error != nil { // Send error back through completion handler
