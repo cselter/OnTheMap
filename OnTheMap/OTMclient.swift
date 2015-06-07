@@ -13,10 +13,11 @@ class OTMclient : NSObject {
      /* Shared session */
      var session: NSURLSession
      
-     static let UdacityURL : String = "https://www.udacity.com/api/session"
+     static let UdacityLoginURL : String = "https://www.udacity.com/api/session"
+     static let UdacityStudentDataURL : String = "https://www.udacity.com/api/users/"
      
-     var username: String? = nil
-     var sessionID : String? = nil
+     var username: String? = nil // DO I NEED THIS?
+     var sessionID : String? = nil // DO I NEED THIS?
      
      override init() {
           session = NSURLSession.sharedSession()
@@ -29,7 +30,7 @@ class OTMclient : NSObject {
      func loginToUdacity(udacityLogin: String, password: String, completionHandler: (success: Bool, data: [String: AnyObject]?, errorString: String?) -> Void) {
           
           // set up the request
-          let request = NSMutableURLRequest(URL: NSURL(string: OTMclient.UdacityURL)!)
+          let request = NSMutableURLRequest(URL: NSURL(string: OTMclient.UdacityLoginURL)!)
           request.HTTPMethod = "POST"
           request.addValue("application/json", forHTTPHeaderField: "Accept")
           request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -62,9 +63,10 @@ class OTMclient : NSObject {
                                         // user has account
                                         if let key = accountData["key"] as? String {
                                              let udacityDictionary: [String: AnyObject] = [
-                                                  "key" : key,
+                                                  "studentKey" : key,
                                                   "registered" : isRegistered
                                              ]
+                                             println(key)
                                              completionHandler(success: true, data: udacityDictionary, errorString: nil)
                                         } else {
                                              completionHandler(success: false, data: nil, errorString: "ERROR0")
@@ -85,6 +87,46 @@ class OTMclient : NSObject {
           task.resume()
      }
   
+
+     // *************************************
+     // * Get Logged In Student (User) Data *
+     // *************************************
+     func getUdacityStudentData(studentKey: String, completionHandler: (data: [String: AnyObject]?, errorString: String?) -> Void) {
+          
+          
+          let request = NSMutableURLRequest(URL: NSURL(string: OTMclient.UdacityStudentDataURL + studentKey)!)
+          
+          let session = NSURLSession.sharedSession()
+          
+          let task = session.dataTaskWithRequest(request) {
+               data, response, error in
+               
+               // if data session fails, return error
+               if error != nil {
+                    completionHandler(data: nil, errorString: error!.localizedDescription)
+                    return
+               }
+               
+               let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
+               
+               var parsingError: NSError? = nil
+               
+               let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
+               
+               println(parsedResult)
+               
+               
+               
+          }
+          
+          
+          
+          
+          
+          
+          task.resume()
+     }
+     
      // *********************
      // * Logout of Udacity *
      // *********************
@@ -93,11 +135,8 @@ class OTMclient : NSObject {
           // TODO: COMPLETE THIS
 
      }
-     
 
-     
-
-     
+     // TODO: MIGHT NOT NEED THIS vvvvvvvvvv - DOUBlE CHECK!
      /* Helper function: Given a dictionary of parameters, convert to a string for a url */
      class func escapedParameters(parameters: [String : AnyObject]) -> String {
           
@@ -118,9 +157,8 @@ class OTMclient : NSObject {
           
           return (!urlVars.isEmpty ? "?" : "") + join("&", urlVars)
      }
-
-     // MARK: - Shared Instance
      
+     // MARK: - Shared Instance
      class func sharedInstance() -> OTMclient {
           
           struct Singleton {

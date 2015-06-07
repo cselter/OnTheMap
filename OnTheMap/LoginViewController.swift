@@ -50,7 +50,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
      }
      
      @IBAction func loginButtonTouchUp(sender: AnyObject) {
-          
           let udacityClient = OTMclient()
           
           udacityClient.loginToUdacity(usernameTextField.text, password: passwordTextField.text){
@@ -59,7 +58,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                if success {
                     println("YAY!")
                     
-                    // TODO:  GET STUDENT DATA
+                    // update loggedInStudent with returned data (studentKey)
+                    self.appDelegate.loggedInStudent = Student(studentData: data)
+                    
+                    // get student data for loggedInStudent
+                    self.getStudentData(udacityClient)
                     
                     // transition to tab controller
                     self.completeLogin()
@@ -79,6 +82,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           }
      }
      
+     
+     // Get Student Data from Udacity
+     func getStudentData(udacityClient: OTMclient) {
+
+          let key = appDelegate.loggedInStudent?.studentKey
+          
+          udacityClient.getUdacityStudentData(key!){
+               data, errorString in
+               
+               
+          }
+          
+          
+          
+     }
+     
+     
+     
+     
+     
      // Login Successful, Move to Tab Bar Controller
      func completeLogin() {
           dispatch_async(dispatch_get_main_queue(), {
@@ -86,7 +109,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                let controller = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
                
                self.presentViewController(controller, animated: true, completion: nil)
-
           })
      }
      

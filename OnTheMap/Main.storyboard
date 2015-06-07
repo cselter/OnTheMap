@@ -132,7 +132,7 @@
         <!--List-->
         <scene sceneID="Bqv-MX-snR">
             <objects>
-                <viewController storyboardIdentifier="List" title="List" id="fxD-A2-OZM" customClass="TableViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="List" title="List" id="fxD-A2-OZM" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EaM-TC-6RE"/>
                         <viewControllerLayoutGuide type="bottom" id="aV5-KD-2l3"/>
@@ -160,7 +160,7 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="hPX-Ck-kSe">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StudentCell" id="hPX-Ck-kSe">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hPX-Ck-kSe" id="VTk-hg-OeY">
