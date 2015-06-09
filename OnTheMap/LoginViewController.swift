@@ -82,7 +82,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           }
      }
      
-     
      // Get Student Data from Udacity
      func getStudentData(udacityClient: OTMclient) {
 
@@ -91,16 +90,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           udacityClient.getUdacityStudentData(key!){
                data, errorString in
                
-               
+               if let studentData = data {
+                    dispatch_async(dispatch_get_main_queue()) {
+                         self.appDelegate.loggedInStudent?.firstName = studentData["firstName"] as? String
+                         self.appDelegate.loggedInStudent?.firstName = studentData["lastName"] as? String
+                    }
+               } else {
+                    self.displayError(errorString)
+               }
           }
-          
-          
-          
      }
-     
-     
-     
-     
      
      // Login Successful, Move to Tab Bar Controller
      func completeLogin() {

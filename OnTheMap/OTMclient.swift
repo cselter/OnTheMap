@@ -48,6 +48,7 @@ class OTMclient : NSObject {
           
                     let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
                     
+                    // MARK: Udacity Session ID Response Log Print
                     println(parsedResult)
                     
                     // first check if parse was successful
@@ -113,16 +114,30 @@ class OTMclient : NSObject {
                
                let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
                
+               // MARK: Udacity Student Data Response Log Print
                println(parsedResult)
                
-               
-               
+               // first check if parse was successful
+               if let parsedError = parsedResult["error"] as? String {
+                    println("student data raw parse error")
+               } else {
+                    println("student data raw parse success")
+                    if let studentData = parsedResult["user"] as? [String: AnyObject] {
+                         if let firstName = studentData["first_name"] as? String {
+                              if let lastName = studentData["last_name"] as? String {
+                                   let nameUpdateDictionary : [String: AnyObject] =
+                                   ["firstName" : firstName,
+                                        "lastName" : lastName]
+                                   completionHandler(data: nameUpdateDictionary, errorString: nil)
+                              }
+                         }else {
+                              completionHandler(data: nil, errorString: "Couldn't get user's name")
+                         }
+                    } else {
+                         completionHandler(data: nil, errorString: "Couldn't get user's data")
+                    }
+               }
           }
-          
-          
-          
-          
-          
           
           task.resume()
      }
@@ -132,8 +147,7 @@ class OTMclient : NSObject {
      // *********************
      func logoutUdacitySession () {
           
-          // TODO: COMPLETE THIS
-
+          // TODO: COMPLETE LOGOUT METHOD
      }
 
      // TODO: MIGHT NOT NEED THIS vvvvvvvvvv - DOUBlE CHECK!
