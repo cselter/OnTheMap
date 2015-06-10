@@ -233,7 +233,7 @@
                     <connections>
                         <outlet property="locationButton" destination="O0X-DE-aJo" id="cFG-lq-MwB"/>
                         <outlet property="logoutButton" destination="z7Y-J7-sk3" id="ryK-Y4-ZGj"/>
-                        <outlet property="mapVIew" destination="f6e-hy-UYL" id="3M1-4e-SkT"/>
+                        <outlet property="mapView" destination="f6e-hy-UYL" id="5RW-AH-cTq"/>
                         <outlet property="refreshButton" destination="mCW-kq-CPR" id="OaX-6B-MzX"/>
                     </connections>
                 </viewController>

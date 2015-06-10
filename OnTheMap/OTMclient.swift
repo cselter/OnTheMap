@@ -15,6 +15,7 @@ class OTMclient : NSObject {
      
      static let UdacityLoginURL : String = "https://www.udacity.com/api/session"
      static let UdacityStudentDataURL : String = "https://www.udacity.com/api/users/"
+     static let ParseStudentLocationDataURL : String = "https://api.parse.com/1/classes/StudentLocation"
      
      var username: String? = nil // DO I NEED THIS?
      var sessionID : String? = nil // DO I NEED THIS?
@@ -70,16 +71,16 @@ class OTMclient : NSObject {
                                              println(key)
                                              completionHandler(success: true, data: udacityDictionary, errorString: nil)
                                         } else {
-                                             completionHandler(success: false, data: nil, errorString: "ERROR0")
+                                             completionHandler(success: false, data: nil, errorString: "User not registered.")
                                         }
                                    } else {
-                                        completionHandler(success: false, data: nil, errorString: "ERROR1")
+                                        completionHandler(success: false, data: nil, errorString: "User not registered.")
                                    }
                               } else {
-                                   completionHandler(success: false, data: nil, errorString: "ERROR2")
+                                   completionHandler(success: false, data: nil, errorString: "User not registered.")
                               }
                          } else {
-                              completionHandler(success: false, data: nil, errorString: "ERROR3")
+                              completionHandler(success: false, data: nil, errorString: "Account data not found.")
                          }
                     }
                }
@@ -88,12 +89,10 @@ class OTMclient : NSObject {
           task.resume()
      }
   
-
      // *************************************
      // * Get Logged In Student (User) Data *
      // *************************************
      func getUdacityStudentData(studentKey: String, completionHandler: (data: [String: AnyObject]?, errorString: String?) -> Void) {
-          
           
           let request = NSMutableURLRequest(URL: NSURL(string: OTMclient.UdacityStudentDataURL + studentKey)!)
           
@@ -150,7 +149,33 @@ class OTMclient : NSObject {
           // TODO: COMPLETE LOGOUT METHOD
      }
 
-     // TODO: MIGHT NOT NEED THIS vvvvvvvvvv - DOUBlE CHECK!
+     
+     
+     
+     // ***********************************************
+     // * Login to Parse to get Student Location Data *
+     // ***********************************************
+     func getStudentLocations(completionHandler: (data: [[String: AnyObject]]?, errorString: String?) -> Void){     
+          
+          let methodParameters = [
+               "order": "-createdAt,-updatedAt",
+               "limit": 100,
+          ]
+          
+          let parseRequest = NSMutableURLRequest(URL: NSURL(string: OTMclient.ParseStudentLocationDataURL + OTMclient.escapedParameters(methodParameters))!)
+          parseRequest.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+          parseRequest.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+          let session = NSURLSession.sharedSession()
+          let task = session.dataTaskWithRequest(parseRequest) { data, response, error in
+               if error != nil { // Handle error...
+                    completionHandler(data: nil, errorString: error!.localizedDescription)
+                    return
+               }
+               println(NSString(data: data, encoding: NSUTF8StringEncoding))
+          }
+          task.resume()
+     }
+     
      /* Helper function: Given a dictionary of parameters, convert to a string for a url */
      class func escapedParameters(parameters: [String : AnyObject]) -> String {
           
@@ -181,10 +206,4 @@ class OTMclient : NSObject {
           
           return Singleton.sharedInstance
      }
-
-
-
-
-
-
 }
