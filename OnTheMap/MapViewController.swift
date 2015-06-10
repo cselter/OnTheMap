@@ -39,10 +39,21 @@ class MapViewController: UIViewController, MKMapViewDelegate {
           parseDataClient.getStudentLocations() {
                students, errorString in
                
-               if let error = errorString {
-                    println(error)
+               if let students = students {
+                    println(students)
+                    
+                    if let appDelegate = self.appDelegate {
+                         var studentDataArr: [Student] = [Student]()
+                         
+                         for studentResults in students {
+                              studentDataArr.append(Student(studentData: studentResults))
+                         }
+                    }
+                    
                } else {
-                   
+                    if let error = errorString {
+                         println(error)
+                    }
                }
           }
      }

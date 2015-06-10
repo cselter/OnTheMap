@@ -17,7 +17,7 @@ struct Student {
      var lastName: String?
      var studentKey: String?
      var studentURL: String?
-     
+     var mediaURL: String?
      
      
      init(studentData: [String: AnyObject]?) {
@@ -39,7 +39,9 @@ struct Student {
                     self.studentURL = studentURL
                }
                
-               
+               if let mediaURL = studentData["mediaURL"] as? String {
+                    self.mediaURL = mediaURL
+               }
                
           }
           

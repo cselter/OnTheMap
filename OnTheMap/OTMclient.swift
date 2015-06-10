@@ -50,7 +50,7 @@ class OTMclient : NSObject {
                     let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
                     
                     // MARK: Udacity Session ID Response Log Print
-                    println(parsedResult)
+                    // println(parsedResult)
                     
                     // first check if parse was successful
                     if let parsedError = parsedResult["error"] as? String {
@@ -114,7 +114,7 @@ class OTMclient : NSObject {
                let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
                
                // MARK: Udacity Student Data Response Log Print
-               println(parsedResult)
+               // println(parsedResult)
                
                // first check if parse was successful
                if let parsedError = parsedResult["error"] as? String {
@@ -149,9 +149,6 @@ class OTMclient : NSObject {
           // TODO: COMPLETE LOGOUT METHOD
      }
 
-     
-     
-     
      // ***********************************************
      // * Login to Parse to get Student Location Data *
      // ***********************************************
@@ -167,11 +164,25 @@ class OTMclient : NSObject {
           parseRequest.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
           let session = NSURLSession.sharedSession()
           let task = session.dataTaskWithRequest(parseRequest) { data, response, error in
-               if error != nil { // Handle error...
+               if error != nil { // If request errors
                     completionHandler(data: nil, errorString: error!.localizedDescription)
                     return
+               } // otherwise, use data
+               // println(NSString(data: data, encoding: NSUTF8StringEncoding))
+               
+               var parsingError: NSError? = nil
+               
+               let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
+               
+               // println(parsedResult)
+               
+               if parsingError != nil {
+                    completionHandler(data: nil, errorString: "Unable to load students data")
+               } else {
+                    if let students = parsedResult["results"] as? [[String: AnyObject]] {
+                         completionHandler(data: students, errorString: nil)
+                    }
                }
-               println(NSString(data: data, encoding: NSUTF8StringEncoding))
           }
           task.resume()
      }
