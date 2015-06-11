@@ -196,15 +196,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="cb9-5A-U1D" firstAttribute="centerX" secondItem="t40-ET-q7i" secondAttribute="centerX" id="0gM-1S-tFn"/>
-                            <constraint firstItem="kVv-xv-AJz" firstAttribute="bottom" secondItem="5d9-je-0Qf" secondAttribute="top" id="43o-8L-o9L"/>
-                            <constraint firstItem="t40-ET-q7i" firstAttribute="top" secondItem="zQh-Fm-j0G" secondAttribute="bottom" id="5ze-jZ-Y63"/>
-                            <constraint firstItem="kVv-xv-AJz" firstAttribute="top" secondItem="t40-ET-q7i" secondAttribute="bottom" id="EVO-KH-GsC"/>
-                            <constraint firstItem="kVv-xv-AJz" firstAttribute="leading" secondItem="t40-ET-q7i" secondAttribute="leading" id="HpC-nM-YO4"/>
-                            <constraint firstItem="cb9-5A-U1D" firstAttribute="top" secondItem="zQh-Fm-j0G" secondAttribute="bottom" constant="11" id="O6Q-O7-A3X"/>
-                            <constraint firstItem="t40-ET-q7i" firstAttribute="trailing" secondItem="kVv-xv-AJz" secondAttribute="trailing" id="YrA-pU-rPV"/>
-                            <constraint firstItem="t40-ET-q7i" firstAttribute="leading" secondItem="yNd-0u-6Vg" secondAttribute="leading" id="b6B-0a-Vk6"/>
-                            <constraint firstAttribute="trailing" secondItem="t40-ET-q7i" secondAttribute="trailing" id="uWY-2L-fLg"/>
+                            <constraint firstAttribute="trailing" secondItem="t40-ET-q7i" secondAttribute="trailing" id="1MT-zM-0LJ"/>
+                            <constraint firstItem="kVv-xv-AJz" firstAttribute="top" secondItem="t40-ET-q7i" secondAttribute="bottom" id="2IS-lJ-xdX"/>
+                            <constraint firstItem="kVv-xv-AJz" firstAttribute="bottom" secondItem="5d9-je-0Qf" secondAttribute="top" id="DjL-gy-8kl"/>
+                            <constraint firstItem="t40-ET-q7i" firstAttribute="top" secondItem="zQh-Fm-j0G" secondAttribute="bottom" id="ECF-gx-tpu"/>
+                            <constraint firstItem="kVv-xv-AJz" firstAttribute="trailing" secondItem="t40-ET-q7i" secondAttribute="trailing" id="PNT-dt-w2e"/>
+                            <constraint firstItem="cb9-5A-U1D" firstAttribute="top" secondItem="zQh-Fm-j0G" secondAttribute="bottom" constant="11" id="ccY-qo-ji5"/>
+                            <constraint firstItem="t40-ET-q7i" firstAttribute="leading" secondItem="kVv-xv-AJz" secondAttribute="leading" id="lfx-Vi-rs7"/>
+                            <constraint firstItem="t40-ET-q7i" firstAttribute="leading" secondItem="yNd-0u-6Vg" secondAttribute="leading" id="t0a-6F-y4N"/>
+                            <constraint firstItem="cb9-5A-U1D" firstAttribute="centerX" secondItem="t40-ET-q7i" secondAttribute="centerX" id="zwq-8f-4vJ"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="List" image="list" id="e2h-wh-b9L"/>

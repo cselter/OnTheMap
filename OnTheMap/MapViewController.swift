@@ -26,13 +26,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
           appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
           userKey = appDelegate.loggedInStudent?.studentKey
           mapView.delegate = self
+          // TODO: disables interactions so data can load... change to loading screen?
+          UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+          getStudentLocationData()
+          UIApplication.sharedApplication().endIgnoringInteractionEvents()
      }
      
      override func viewDidAppear(animated: Bool) {
+          // TODO: Might not need
           
           // TODO: add overlay view that shows when loading to prevent user touching other views before they're ready
           
-          getStudentLocationData()
+          // TODO: double check to make sure this is working correctly
      }
      
      // ********************************************
@@ -118,5 +123,81 @@ class MapViewController: UIViewController, MKMapViewDelegate {
           getStudentLocationData()
           addStudentMapPins()
      }
+     
+     // *************************************************
+     // * Configure annotation view of the student Pins *
+     // *************************************************
+     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+          
+          var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("studentPin") as? MKPinAnnotationView
+          
+          if pinView == nil {
+               pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "studentPin")
+               pinView?.canShowCallout = true
+               pinView?.pinColor = .Red
+               pinView?.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+          } else {
+               pinView?.annotation = annotation
+          }
+          
+          return pinView
+     }
+     
+     // **************************************
+     // * Open URL when annotation is tapped *
+     // **************************************
+     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+          if control == view.rightCalloutAccessoryView {
+               
+               if let mediaURL = view.annotation.subtitle! {
+                    
+                    if mediaURL.lowercaseString.hasPrefix("http://") || mediaURL.lowercaseString.hasPrefix("https://"){
+                    
+                         if let url = NSURL(string: mediaURL) {
+                              UIApplication.sharedApplication().openURL(url)
+                         }
+                    } else {
+                         let updatedURL = "http://\(mediaURL)"
+                    
+                         if let url = NSURL(string: updatedURL) {
+                              UIApplication.sharedApplication().openURL(url)
+                         }
+                    }
+               }
+          }
+     }
+     
+               
+               
+               
 
+     
+
+     // TODO: IF NOT USED, REMOVE IT
+     func showActivityIndicatory(uiView: UIView) {
+          var container: UIView = UIView()
+          container.frame = uiView.frame
+          container.center = uiView.center
+          container.backgroundColor = UIColor.blackColor()
+     
+          var loadingView: UIView = UIView()
+          loadingView.frame = CGRectMake(0, 0, 80, 80)
+          loadingView.center = uiView.center
+          loadingView.backgroundColor = UIColor.whiteColor()
+          loadingView.clipsToBounds = true
+          loadingView.layer.cornerRadius = 10
+          
+          var actInd: UIActivityIndicatorView = UIActivityIndicatorView()
+          actInd.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+          actInd.activityIndicatorViewStyle =
+               UIActivityIndicatorViewStyle.WhiteLarge
+          actInd.center = CGPointMake(loadingView.frame.size.width / 2,
+               loadingView.frame.size.height / 2);
+          loadingView.addSubview(actInd)
+          container.addSubview(loadingView)
+          uiView.addSubview(container)
+          actInd.startAnimating()
+     }
+     
+     
 }

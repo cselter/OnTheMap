@@ -34,6 +34,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
      override func viewDidAppear(animated: Bool) {
           super.viewWillAppear(animated)
           self.debugTextLabel.text = ""
+          
+          // TODO: REMOVE THIS!!!!
+          self.usernameTextField.text = "cdotburgess@gmail.com"
+          self.passwordTextField.text = "9cj25h7a"
      }
      
      func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -56,8 +60,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                success, data, error in
                
                if success {
-                    println("YAY!")
-                    
                     // update loggedInStudent with returned data (studentKey)
                     self.appDelegate.loggedInStudent = Student(studentData: data)
                     
@@ -75,9 +77,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     dispatch_async(dispatch_get_main_queue(), {
                          self.loginFailShake()
                     })
-
-                    // TODO: parse error to provide friendly debug lable code
-                    self.displayError(error)
+                    
+                    let missingUserName = "trails.Error 400: Missing parameter \'username\'"
+                    let missingPassword = "trails.Error 400: Missing parameter \'password\'"
+                    
+                    switch(error!) {
+                         case (missingUserName):
+                              self.displayError("Missing Username")
+                         
+                         case (missingPassword):
+                              self.displayError("Missing Password")
+                         
+                         default:
+                              self.displayError(error)
+                    }
                }
           }
      }

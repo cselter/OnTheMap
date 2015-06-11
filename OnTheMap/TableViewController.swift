@@ -15,7 +15,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
      var appDelegate: AppDelegate!
      
      var studentList: [Student]?
-     
+   
      @IBOutlet var tableView: UITableView!
      @IBOutlet weak var refreshButton: UIBarButtonItem!
      @IBOutlet weak var locationButton: UIBarButtonItem!
@@ -43,6 +43,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
           }
      }
      
+     // table cell count
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
           return studentList!.count
      }
@@ -59,42 +60,26 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
      
      // Open URL in Safari when row is selected
      func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-          
-          println("row selected")
           dispatch_async(dispatch_get_main_queue()) {
                if let mediaURL = self.studentList![indexPath.row].mediaURL {
-                    println("\(mediaURL)")
 
-                   
-                    
-                    
-                    
-                    
-                    
                     if mediaURL.lowercaseString.hasPrefix("http://") || mediaURL.lowercaseString.hasPrefix("https://"){
                          
                          if let url = NSURL(string: mediaURL) {
-
-                              println("url saved")
                               UIApplication.sharedApplication().openURL(url)
-
                          }
                     } else {
                          let updatedURL = "http://\(mediaURL)"
                          
                          if let url = NSURL(string: updatedURL) {
-                              println("fixed URL")
                               UIApplication.sharedApplication().openURL(url)
                          }
                     }
-                    
-                    
-
-                              }
+               }
           }
      }
-
      
+     // refresh the data model
      @IBAction func refreshButtonTouchUp(sender: AnyObject) {
           
           let dataClient = OTMclient.sharedInstance()
@@ -118,12 +103,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     }
                }
           }
-          
           self.tableView.reloadData()
      }
-     
-     
-     
      
 }
 

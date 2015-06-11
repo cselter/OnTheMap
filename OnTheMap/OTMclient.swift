@@ -57,7 +57,7 @@ class OTMclient : NSObject {
                          println("parse error")
                          completionHandler(success: false, data: nil, errorString: parsedError)
                     } else {
-                         println("parse success")
+                         // println("parse success")
                          if let accountData = parsedResult["account"] as? [String: AnyObject] {
                               // review account data
                               if let isRegistered = accountData["registered"] as? Bool {
@@ -68,7 +68,7 @@ class OTMclient : NSObject {
                                                   "studentKey" : key,
                                                   "registered" : isRegistered
                                              ]
-                                             println(key)
+                                             // println(key)
                                              completionHandler(success: true, data: udacityDictionary, errorString: nil)
                                         } else {
                                              completionHandler(success: false, data: nil, errorString: "User not registered.")
@@ -120,7 +120,7 @@ class OTMclient : NSObject {
                if let parsedError = parsedResult["error"] as? String {
                     println("student data raw parse error")
                } else {
-                    println("student data raw parse success")
+                    // println("student data raw parse success")
                     if let studentData = parsedResult["user"] as? [String: AnyObject] {
                          if let firstName = studentData["first_name"] as? String {
                               if let lastName = studentData["last_name"] as? String {
@@ -153,7 +153,6 @@ class OTMclient : NSObject {
      // * Login to Parse to get Student Location Data *
      // ***********************************************
      func getStudentLocations(completionHandler: (data: [[String: AnyObject]]?, errorString: String?) -> Void){     
-          
           let methodParameters = [
                "order": "-createdAt,-updatedAt",
                "limit": 100,
