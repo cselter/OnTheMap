@@ -206,7 +206,11 @@
                                     <barButtonItem title="Logout" id="z7Y-J7-sk3"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="TXd-OM-4VX"/>
                                     <barButtonItem image="pin" id="O0X-DE-aJo"/>
-                                    <barButtonItem systemItem="refresh" id="mCW-kq-CPR"/>
+                                    <barButtonItem systemItem="refresh" id="mCW-kq-CPR">
+                                        <connections>
+                                            <action selector="reloadButtonTouchUp:" destination="mlc-YC-onj" id="g27-tZ-yP4"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="On The Map" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFq-XE-8Kd">

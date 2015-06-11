@@ -15,6 +15,8 @@ struct Student {
      var studentKey: String?
      var studentURL: String?
      var mediaURL: String?
+     var latitude: Float?
+     var longitude: Float?
 
      init(studentData: [String: AnyObject]?) {
           
@@ -38,7 +40,14 @@ struct Student {
                if let mediaURL = studentData["mediaURL"] as? String {
                     self.mediaURL = mediaURL
                }
+               
+               if let latitude = studentData["latitude"] as? Float {
+                    self.latitude = latitude
+               }
 
+               if let longitude = studentData["longitude"] as? Float {
+                    self.longitude = longitude
+               } 
           }
      }
 }
