@@ -29,6 +29,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
      }
      
      override func viewDidAppear(animated: Bool) {
+          
+          // TODO: add overlay view that shows when loading to prevent user touching other views before they're ready
+          
           getStudentLocationData()
      }
      

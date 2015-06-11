@@ -141,15 +141,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t40-ET-q7i">
-                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
-                                <items>
-                                    <barButtonItem title="Logout" id="ExG-25-NSM"/>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="qgz-fQ-Vv8"/>
-                                    <barButtonItem image="pin" id="mZg-Oa-vcz"/>
-                                    <barButtonItem systemItem="refresh" id="vbx-Fd-PfS"/>
-                                </items>
-                            </toolbar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kVv-xv-AJz">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -183,13 +174,34 @@
                                     <outlet property="dataSource" destination="ZZF-cm-Mfx" id="C7a-8R-kZ3"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="On The Map" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cb9-5A-U1D">
+                                <rect key="frame" x="252" y="31" width="97" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t40-ET-q7i">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="Logout" id="ExG-25-NSM"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="qgz-fQ-Vv8"/>
+                                    <barButtonItem image="pin" id="mZg-Oa-vcz"/>
+                                    <barButtonItem systemItem="refresh" id="vbx-Fd-PfS">
+                                        <connections>
+                                            <action selector="refreshButtonTouchUp:" destination="ZZF-cm-Mfx" id="brp-yn-rXH"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="cb9-5A-U1D" firstAttribute="centerX" secondItem="t40-ET-q7i" secondAttribute="centerX" id="0gM-1S-tFn"/>
                             <constraint firstItem="kVv-xv-AJz" firstAttribute="bottom" secondItem="5d9-je-0Qf" secondAttribute="top" id="43o-8L-o9L"/>
                             <constraint firstItem="t40-ET-q7i" firstAttribute="top" secondItem="zQh-Fm-j0G" secondAttribute="bottom" id="5ze-jZ-Y63"/>
                             <constraint firstItem="kVv-xv-AJz" firstAttribute="top" secondItem="t40-ET-q7i" secondAttribute="bottom" id="EVO-KH-GsC"/>
                             <constraint firstItem="kVv-xv-AJz" firstAttribute="leading" secondItem="t40-ET-q7i" secondAttribute="leading" id="HpC-nM-YO4"/>
+                            <constraint firstItem="cb9-5A-U1D" firstAttribute="top" secondItem="zQh-Fm-j0G" secondAttribute="bottom" constant="11" id="O6Q-O7-A3X"/>
                             <constraint firstItem="t40-ET-q7i" firstAttribute="trailing" secondItem="kVv-xv-AJz" secondAttribute="trailing" id="YrA-pU-rPV"/>
                             <constraint firstItem="t40-ET-q7i" firstAttribute="leading" secondItem="yNd-0u-6Vg" secondAttribute="leading" id="b6B-0a-Vk6"/>
                             <constraint firstAttribute="trailing" secondItem="t40-ET-q7i" secondAttribute="trailing" id="uWY-2L-fLg"/>
@@ -197,6 +209,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="List" image="list" id="e2h-wh-b9L"/>
                     <connections>
+                        <outlet property="locationButton" destination="mZg-Oa-vcz" id="40l-Hb-DHm"/>
+                        <outlet property="logoutButton" destination="ExG-25-NSM" id="Zpk-PN-u5T"/>
+                        <outlet property="refreshButton" destination="vbx-Fd-PfS" id="COD-8O-xGW"/>
                         <outlet property="tableView" destination="kVv-xv-AJz" id="WjP-a7-R4F"/>
                     </connections>
                 </viewController>
@@ -268,7 +283,7 @@
         <scene sceneID="Qtz-F9-XeM">
             <objects>
                 <tabBarController storyboardIdentifier="TabBarController" id="fHg-mL-E8t" customClass="TabBarController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="obH-Og-WjJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
