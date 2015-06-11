@@ -8,18 +8,14 @@
 
 import Foundation
 
-
-
 struct Student {
-     
-     
+
      var firstName: String?
      var lastName: String?
      var studentKey: String?
      var studentURL: String?
      var mediaURL: String?
-     
-     
+
      init(studentData: [String: AnyObject]?) {
           
           if let studentData = studentData {
@@ -42,9 +38,7 @@ struct Student {
                if let mediaURL = studentData["mediaURL"] as? String {
                     self.mediaURL = mediaURL
                }
-               
+
           }
-          
      }
-     
 }

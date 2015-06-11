@@ -40,7 +40,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                students, errorString in
                
                if let students = students {
-                    println(students)
                     
                     if let appDelegate = self.appDelegate {
                          var studentDataArr: [Student] = [Student]()
@@ -48,6 +47,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                          for studentResults in students {
                               studentDataArr.append(Student(studentData: studentResults))
                          }
+                         
+                         appDelegate.allStudents = studentDataArr
                     }
                     
                } else {

@@ -12,9 +12,13 @@ import UIKit
 class TableViewController: UITableViewController {
      
      
+     var appDelegate: AppDelegate!
      
-     
-     
+     override func viewDidAppear(animated: Bool) {
+          var studentDataArray = appDelegate.allStudents
+          println("Table")
+          println(studentDataArray)
+     }
      
      
 }
