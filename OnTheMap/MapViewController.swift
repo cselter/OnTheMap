@@ -77,7 +77,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                          var mapPins = [MKAnnotation]()
                          
                          for students in studentMapPins {
-                              
+                              // ensure all data is present before loading pin
                               if let long = students.longitude {
                                    if let lat = students.latitude {
                                         if let fName = students.firstName {
@@ -111,13 +111,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
           }
      }
      
-     
-          
      @IBAction func reloadButtonTouchUp(sender: AnyObject) {
           getStudentLocationData()
           addStudentMapPins()
      }
-     
-     
-     
+
 }
