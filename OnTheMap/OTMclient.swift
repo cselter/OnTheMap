@@ -171,9 +171,6 @@ class OTMclient : NSObject {
           
           
      }
-     
-
-     
 
      // ***********************************************
      // * Login to Parse to get Student Location Data *

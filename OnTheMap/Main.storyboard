@@ -299,7 +299,7 @@
                                     <color key="titleColor" red="0.27686842" green="0.51058913559999997" blue="0.72923354129999995" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="QNV-yb-lai" kind="presentation" id="GBz-Ki-amP"/>
+                                    <action selector="findOnMapButtonTouchUp:" destination="Vdk-sc-6vf" eventType="touchUpInside" id="t7f-rv-Dbl"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -325,6 +325,7 @@
                         <outlet property="cancelButton" destination="HMC-n1-sow" id="4WK-7f-Euc"/>
                         <outlet property="findOnTheMapButton" destination="0bf-WM-Vx7" id="Qe4-Ho-glw"/>
                         <outlet property="locationTextView" destination="bhe-Kf-OaF" id="JrL-lz-2Lq"/>
+                        <segue destination="QNV-yb-lai" kind="presentation" identifier="getMediaURL" id="scE-Z9-rKL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JcM-Yw-EL0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -513,6 +514,6 @@
         <image name="pin" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Odb-WS-Jrc"/>
+        <segue reference="Ozu-kF-1yj"/>
     </inferredMetricsTieBreakers>
 </document>

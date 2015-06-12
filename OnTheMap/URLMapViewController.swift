@@ -18,15 +18,21 @@ class URLMapViewController: UIViewController, MKMapViewDelegate {
      @IBOutlet weak var mapView: MKMapView!
      @IBOutlet weak var mediaURLtextField: UITextView!
      
-     override func viewDidLoad() {
+     var geolocation: CLPlacemark!
           
+     override func viewDidLoad() {
           submitButton.layer.cornerRadius = 5
           submitButton.layer.borderWidth = 1
           submitButton.layer.borderColor = UIColor.grayColor().CGColor
           submitButton.backgroundColor = UIColor.whiteColor()
           mediaURLtextField.backgroundColor = UIColor.clearColor()
+          
+          mapView.delegate = self
      }
      
+     override func viewDidAppear(animated: Bool) {
+          self.mapView.addAnnotation(MKPlacemark(placemark: geolocation))
+     }
      
      @IBAction func editLocationButtonTouchUp(sender: AnyObject) {
           self.dismissViewControllerAnimated(true, completion: nil)
