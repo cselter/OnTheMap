@@ -51,7 +51,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
           let cell = tableView.dequeueReusableCellWithIdentifier("StudentTableCell", forIndexPath: indexPath) as! UITableViewCell
           let studentCell = studentList![indexPath.row]
-          cell.imageView?.image = UIImage(named:  "pin")
+          cell.imageView?.image = UIImage(named: "pin")
           cell.textLabel?.text = "\(studentCell.firstName!) \(studentCell.lastName!)"
           cell.detailTextLabel?.text = studentCell.mediaURL
           
@@ -78,6 +78,19 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                }
           }
      }
+     
+     // *****************************************************
+     // * Log out of Udacity Session and Return to Login VC *
+     // *****************************************************
+     @IBAction func logoutButtonTouchUp(sender: AnyObject) {
+          
+          let openSession = OTMclient.sharedInstance()
+          openSession.logoutOfUdacity()
+          self.dismissViewControllerAnimated(true, completion: nil)
+     }
+     
+     
+     
      
      // refresh the data model
      @IBAction func refreshButtonTouchUp(sender: AnyObject) {

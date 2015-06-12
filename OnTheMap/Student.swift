@@ -13,8 +13,8 @@ struct Student {
      var firstName: String?
      var lastName: String?
      var studentKey: String?
-     var studentURL: String?
-     var mediaURL: String?
+     var studentURL: String? // from Udacity profile
+     var mediaURL: String? // from Parse API
      var latitude: Float?
      var longitude: Float?
 

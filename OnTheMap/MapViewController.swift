@@ -119,6 +119,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
           }
      }
      
+     // ***********************************************
+     // * Get fresh data from API and reload map pins *
+     // ***********************************************
      @IBAction func reloadButtonTouchUp(sender: AnyObject) {
           getStudentLocationData()
           addStudentMapPins()
@@ -136,6 +139,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                pinView?.canShowCallout = true
                pinView?.pinColor = .Red
                pinView?.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+               
           } else {
                pinView?.annotation = annotation
           }
@@ -166,10 +170,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                }
           }
      }
-     
-               
-               
-               
+            
+     // *****************************************************
+     // * Log out of Udacity Session and Return to Login VC *
+     // *****************************************************
+     @IBAction func logoutButtonTouchUp(sender: AnyObject) {
+
+          let openSession = OTMclient.sharedInstance()
+          
+          openSession.logoutOfUdacity()
+          self.dismissViewControllerAnimated(true, completion: nil)
+          
+     }
 
      
 

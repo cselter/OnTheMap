@@ -117,6 +117,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
      // Login Successful, Move to Tab Bar Controller
      func completeLogin() {
           dispatch_async(dispatch_get_main_queue(), {
+               self.passwordTextField.text = "" // remove password 
                self.debugTextLabel.text = "Login Success!"
                let controller = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
                
@@ -153,4 +154,5 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           
           self.view.layer.addAnimation(anim, forKey: nil)
      }
+     
 }

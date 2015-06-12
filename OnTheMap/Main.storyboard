@@ -183,7 +183,11 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t40-ET-q7i">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem title="Logout" id="ExG-25-NSM"/>
+                                    <barButtonItem title="Logout" id="ExG-25-NSM">
+                                        <connections>
+                                            <action selector="logoutButtonTouchUp:" destination="ZZF-cm-Mfx" id="gJY-NE-gJS"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="qgz-fQ-Vv8"/>
                                     <barButtonItem image="pin" id="mZg-Oa-vcz"/>
                                     <barButtonItem systemItem="refresh" id="vbx-Fd-PfS">
@@ -237,7 +241,11 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5aI-2z-Nyv">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem title="Logout" id="z7Y-J7-sk3"/>
+                                    <barButtonItem title="Logout" id="z7Y-J7-sk3">
+                                        <connections>
+                                            <action selector="logoutButtonTouchUp:" destination="mlc-YC-onj" id="XkC-Ph-iSs"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="TXd-OM-4VX"/>
                                     <barButtonItem image="pin" id="O0X-DE-aJo"/>
                                     <barButtonItem systemItem="refresh" id="mCW-kq-CPR">
