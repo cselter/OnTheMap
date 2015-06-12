@@ -356,6 +356,9 @@
                                 <state key="normal" title="Submit">
                                     <color key="titleColor" red="0.27686842" green="0.51058913559999997" blue="0.72923354129999995" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="submitButtonTouchUp:" destination="QNV-yb-lai" eventType="touchUpInside" id="U9O-G3-Ug1"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mb0-bU-JyM">
                                 <rect key="frame" x="535" y="20" width="49" height="30"/>
@@ -380,7 +383,7 @@
                                     <action selector="editLocationButtonTouchUp:" destination="QNV-yb-lai" eventType="touchUpInside" id="AnY-N7-3kF"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="https://" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="RWU-pC-Byz">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="http://" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="RWU-pC-Byz">
                                 <rect key="frame" x="16" y="58" width="568" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>

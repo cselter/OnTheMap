@@ -40,6 +40,7 @@ class LocationSelectionViewController: UIViewController {
                     
                     // send over the placemark
                     mediaURLViewController.geolocation = placemark
+                    mediaURLViewController.mapString = address
                     
                     self.presentViewController(mediaURLViewController, animated: true, completion: nil)
                     

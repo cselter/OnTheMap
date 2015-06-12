@@ -18,7 +18,10 @@ class URLMapViewController: UIViewController, MKMapViewDelegate {
      @IBOutlet weak var mapView: MKMapView!
      @IBOutlet weak var mediaURLtextField: UITextView!
      
+     var mapString: String?
      var geolocation: CLPlacemark!
+     var lat:CLLocationDegrees?
+     var long:CLLocationDegrees?
           
      override func viewDidLoad() {
           submitButton.layer.cornerRadius = 5
@@ -33,10 +36,10 @@ class URLMapViewController: UIViewController, MKMapViewDelegate {
      override func viewDidAppear(animated: Bool) {
           self.mapView.addAnnotation(MKPlacemark(placemark: geolocation))
           
-          let lat = geolocation.location.coordinate.latitude
-          let long = geolocation.location.coordinate.longitude
+          self.lat = geolocation.location.coordinate.latitude
+          self.long = geolocation.location.coordinate.longitude
           
-          let mapPin = CLLocationCoordinate2DMake(lat, long)
+          let mapPin = CLLocationCoordinate2DMake(lat!, long!)
           
           var zoomView =
           MKMapCamera(lookingAtCenterCoordinate: mapPin, fromEyeCoordinate: mapPin, eyeAltitude: 10000.0)
@@ -51,4 +54,20 @@ class URLMapViewController: UIViewController, MKMapViewDelegate {
           self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
      }
      
+     @IBAction func submitButtonTouchUp(sender: AnyObject) {
+          
+          var finalURL: String?
+          
+          if mediaURLtextField.text.lowercaseString.hasPrefix("http://") || mediaURLtextField.text.lowercaseString.hasPrefix("https://") {
+               finalURL = mediaURLtextField.text
+          } else {
+               finalURL = "http://\(mediaURLtextField.text)"
+          }
+          println(lat)
+          println(long)
+          // postStudentLocation(finalURL!)
+     }
+     
+          
+
 }

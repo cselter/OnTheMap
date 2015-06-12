@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 class OTMclient : NSObject {
      
@@ -48,9 +49,6 @@ class OTMclient : NSObject {
                     var parsingError: NSError? = nil
           
                     let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
-                    
-                    // MARK: Udacity Session ID Response Log Print
-                    // println(parsedResult)
                     
                     // first check if parse was successful
                     if let parsedError = parsedResult["error"] as? String {
@@ -112,9 +110,6 @@ class OTMclient : NSObject {
                var parsingError: NSError? = nil
                
                let parsedResult = NSJSONSerialization.JSONObjectWithData(newData, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
-               
-               // MARK: Udacity Student Data Response Log Print
-               // println(parsedResult)
                
                // first check if parse was successful
                if let parsedError = parsedResult["error"] as? String {
@@ -209,8 +204,32 @@ class OTMclient : NSObject {
           task.resume()
      }
      
-     
-     
+     // **************************************
+     // * Post Student Location to Parse API *
+     // **************************************
+     // TODO: INCOMPLETE - UNTESTED
+     func postStudentLocation(enteredURL: String, lat: CLLocationDegrees, long: CLLocationDegrees, mapString: String) {
+          
+          var appDelegate:AppDelegate!
+
+          let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
+          request.HTTPMethod = "POST"
+          request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+          request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+          request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+          request.HTTPBody = "{\"uniqueKey\": \"\(appDelegate.loggedInStudent?.studentKey)\", \"firstName\": \"\(appDelegate.loggedInStudent?.firstName)\", \"lastName\": \"\(appDelegate.loggedInStudent?.lastName)\",\"mapString\": \"\(mapString)\", \"mediaURL\": \"\(enteredURL)\",\"latitude\": \(lat), \"longitude\": \(long)}".dataUsingEncoding(NSUTF8StringEncoding)
+          let session = NSURLSession.sharedSession()
+          let task = session.dataTaskWithRequest(request) { data, response, error in
+               if error != nil { // Handle error…
+                    return
+               }
+               println(NSString(data: data, encoding: NSUTF8StringEncoding))
+          }
+          
+          
+          task.resume()
+     }
+
      
      
      
