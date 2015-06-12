@@ -13,13 +13,9 @@ import MapKit
 class LocationSelectionViewController: UIViewController {
      
      @IBOutlet weak var findOnTheMapButton: UIButton!
-     
      @IBOutlet weak var locationTextView: UITextView!
      @IBOutlet weak var cancelButton: UIButton!
-     
-     
-     
-     
+
      override func viewDidLoad() {
           findOnTheMapButton.layer.cornerRadius = 5
           findOnTheMapButton.layer.borderWidth = 1
@@ -28,13 +24,10 @@ class LocationSelectionViewController: UIViewController {
           locationTextView.backgroundColor = UIColor.clearColor()
      }
      
-     
-     
      @IBAction func cancelButtonTouchUp(sender: AnyObject) {
           self.dismissViewControllerAnimated(true, completion: nil)
      }
    
-     
      @IBAction func findOnMapButtonTouchUp(sender: AnyObject) {
           
           let address = locationTextView.text as String
@@ -51,10 +44,12 @@ class LocationSelectionViewController: UIViewController {
                     self.presentViewController(mediaURLViewController, animated: true, completion: nil)
                     
                } else {
-                    // TODO: alert the user
-                    
-                    
-                    
+                    // Unable to identify location, ask user to re-enter
+                    var invalidAddress = UIAlertView()
+                    invalidAddress.title = "Invalid Location"
+                    invalidAddress.message = "Unable to identify location. Please re-enter."
+                    invalidAddress.addButtonWithTitle("OK")
+                    invalidAddress.show()
                }
           })
      }

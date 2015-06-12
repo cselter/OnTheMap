@@ -32,6 +32,15 @@ class URLMapViewController: UIViewController, MKMapViewDelegate {
      
      override func viewDidAppear(animated: Bool) {
           self.mapView.addAnnotation(MKPlacemark(placemark: geolocation))
+          
+          let lat = geolocation.location.coordinate.latitude
+          let long = geolocation.location.coordinate.longitude
+          
+          let mapPin = CLLocationCoordinate2DMake(lat, long)
+          
+          var zoomView =
+          MKMapCamera(lookingAtCenterCoordinate: mapPin, fromEyeCoordinate: mapPin, eyeAltitude: 10000.0)
+          self.mapView.setCamera(zoomView, animated: true)
      }
      
      @IBAction func editLocationButtonTouchUp(sender: AnyObject) {
