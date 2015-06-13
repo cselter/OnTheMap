@@ -14,16 +14,20 @@ class StudentInfoViewController: UIViewController {
      
      @IBOutlet weak var nameLabel: UILabel!
      @IBOutlet weak var studentKey: UILabel!
+     @IBOutlet weak var mediaURLLabel: UILabel!
+     @IBOutlet weak var latLabel: UILabel!
+     @IBOutlet weak var longLabel: UILabel!
+     @IBOutlet weak var mapView: MKMapView!
  
      
      var appDelegate: AppDelegate!
      var userfName: String?
      var userlName: String?
      var userKey: String?
-     var lat: CLLocationDegrees?
-     var long: CLLocationDegrees?
+     var lat: Float?
+     var long: Float?
      var loc: CLPlacemark?
-     var url: String?
+     var mediaURL: String?
      
      override func viewDidLoad() {
           super.viewDidLoad()
@@ -52,14 +56,40 @@ class StudentInfoViewController: UIViewController {
                userKey = "unavail"
           }
      
-
+          if let url = appDelegate.loggedInStudent?.mediaURL {
+               mediaURL = url
+          } else {
+               mediaURL = "not posted yet"
+          }
+          
+          if let latLoc = appDelegate.loggedInStudent?.latitude {
+               lat = latLoc
+          } else {
+               lat = nil
+          }
+          if let longLoc = appDelegate.loggedInStudent?.longitude {
+               long = longLoc
+          } else {
+               long = nil
+          }
           
           
           // Update the labels
           nameLabel.text = userfName! + " " + userlName!
           studentKey.text = self.userKey
+          mediaURLLabel.text = self.mediaURL
           
+          if lat != nil {
+               latLabel.text = String(stringInterpolationSegment: self.lat)
+          } else {
+               latLabel.text = "not posted yet"
+          }
           
+          if long != nil {
+               longLabel.text = String(stringInterpolationSegment: self.long)
+          } else {
+               longLabel.text = "not posted yet"
+          }
           
      }
      

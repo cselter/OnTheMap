@@ -124,6 +124,7 @@ class OTMclient : NSObject {
                                    let nameUpdateDictionary : [String: AnyObject] =
                                    ["firstName" : firstName,
                                         "lastName" : lastName]
+                                   println(studentData)
                                    completionHandler(data: nameUpdateDictionary, errorString: nil)
                               }
                          }else {
@@ -206,7 +207,7 @@ class OTMclient : NSObject {
      // **************************************
      // * Post Student Location to Parse API *
      // **************************************
-     func postStudentLocation(enteredURL: String, lat: CLLocationDegrees, long: CLLocationDegrees, mapString: String, completionHandler: (success: Bool?) -> Void) {
+     func postStudentLocation(overwrite: Bool, enteredURL: String, lat: CLLocationDegrees, long: CLLocationDegrees, mapString: String, completionHandler: (postsExist: Bool?, success: Bool?) -> Void) {
           // first query for existing post
           queryForStudentLocation() { data, error in
 
@@ -214,8 +215,43 @@ class OTMclient : NSObject {
                     if let data = data { // and data is not nil
                          if data.count > 0 { // and count of objects is greater than 0
                               println("posts!")
-                         } else { // otherwise empty array
-                              println("no posts")
+                              
+                              // Delete existing posts
+                              if overwrite {
+                                   self.deleteExistingPosts(data)
+                                   self.confirmedPostStudentLocation(enteredURL, lat: lat, long: long, mapString: mapString) { success in
+                                        
+                                        if success != nil {
+                                             if success == true {
+                                                  println("post successful")
+                                             } else {
+                                                  println("post unsuccessful")
+                                             }
+                                        } else {
+                                             println("success = nil")
+                                        }
+                                   }
+                              } else { // if overwrite is no
+                                   completionHandler(postsExist: true, success: false)
+                              }
+                              
+                         } else {
+                              // Empty array = no posts
+                              // Go ahead and post it
+                              self.confirmedPostStudentLocation(enteredURL, lat: lat, long: long, mapString: mapString) { success in
+                                   
+                                   if success != nil {
+                                        if success == true {
+                                             println("post successful")
+                                        } else {
+                                             println("post unsuccessful")
+                                        }
+                                   } else {
+                                        println("success = nil")
+                                   }
+                                   
+                                   completionHandler(postsExist: false, success: true)
+                              }
                          }
                     } else {
                          println("error getting existing data posts blah")
@@ -223,69 +259,22 @@ class OTMclient : NSObject {
                } else {
                     println(error)
                }
-               
-               
-      
-               
-               /*
-
-               
-               if let locations = data {
-                    
-                    var locArr: [[String:AnyObject]] = [[String:AnyObject]]()
-                    
-                    
-                    
-                    
-                    for loc in locations {
-                         locArr.append(loc)
-                         println(loc["objectId"]!)
-                         
-                         
-                         let objID = loc["objectId"] as? String
-                         println(objID)
-                         let urlString = "https://api.parse.com/1/classes/StudentLocation/\(objID!)"
-                         let url = NSURL(string: urlString)
-                         let request = NSMutableURLRequest(URL: url!)
-                         request.HTTPMethod = "DELETE"
-                         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-                         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-                         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                         
-                         
-                         
-                         
-                         //request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Cupertino, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.322998, \"longitude\": -122.032182}".dataUsingEncoding(NSUTF8StringEncoding)
-                         let session = NSURLSession.sharedSession()
-                         let task = session.dataTaskWithRequest(request) { data, response, error in
-                              if error != nil { // Handle error…
-                                   return
-                              }
-                              println(NSString(data: data, encoding: NSUTF8StringEncoding))
-                         }
-                         task.resume()
-                         
-                         
-                         
-                         
-                    }
-                   
-               }
-               
-               */
-
-               
           }
+     }
 
+     // ******************
+     // * Confirmed Post *
+     // ******************
+     func confirmedPostStudentLocation(enteredURL: String, lat: CLLocationDegrees, long: CLLocationDegrees, mapString: String, completionHandler: (success: Bool?) -> Void) {
           
-          appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+          self.appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
           let studentKey = self.appDelegate.loggedInStudent?.studentKey
-          let fName = appDelegate.loggedInStudent?.firstName
-          let lName = appDelegate.loggedInStudent?.lastName
+          let fName = self.appDelegate.loggedInStudent?.firstName
+          let lName = self.appDelegate.loggedInStudent?.lastName
           let latLoc = lat
           let longLoc = long
           let mString = mapString
-
+          
           let request = NSMutableURLRequest(URL: NSURL(string: OTMclient.ParseStudentLocationDataURL)!)
           request.HTTPMethod = "POST"
           request.addValue("\(OTMclient.ParseAppID)", forHTTPHeaderField: "X-Parse-Application-Id")
@@ -311,11 +300,7 @@ class OTMclient : NSObject {
                completionHandler(success: true)
           }
           task.resume()
-
-
      }
-
-     
      
      // **********************************************
      // * Check to see if student has already posted *
@@ -360,7 +345,38 @@ class OTMclient : NSObject {
      
      
      
+     // *************************
+     // * Delete existing posts *
+     // *************************
+     func deleteExistingPosts(data: [[String: AnyObject]]) {
+
+          var locArr: [[String:AnyObject]] = [[String:AnyObject]]()
      
+          for loc in data {
+               locArr.append(loc)
+               println(loc["objectId"]!)
+               
+               let objID = loc["objectId"] as? String
+               println(objID)
+               let urlString = "https://api.parse.com/1/classes/StudentLocation/\(objID!)"
+               let url = NSURL(string: urlString)
+               let request = NSMutableURLRequest(URL: url!)
+               request.HTTPMethod = "DELETE"
+               request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+               request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+               request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+               
+               let session = NSURLSession.sharedSession()
+               let task = session.dataTaskWithRequest(request) { data, response, error in
+                    if error != nil { // Handle error…
+                    return
+                    }
+          
+                    println(NSString(data: data, encoding: NSUTF8StringEncoding))
+               }
+               task.resume()
+          }
+     }
      
      
      
@@ -368,17 +384,17 @@ class OTMclient : NSObject {
      
      /* Helper function: Given a dictionary of parameters, convert to a string for a url */
      class func escapedParameters(parameters: [String : AnyObject]) -> String {
-          
+     
           var urlVars = [String]()
-          
+     
           for (key, value) in parameters {
-               
+     
                /* Make sure that it is a string value */
                let stringValue = "\(value)"
-               
+     
                /* Escape it */
                let escapedValue = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-               
+     
                /* Append it */
                urlVars += [key + "=" + "\(escapedValue!)"]
                
