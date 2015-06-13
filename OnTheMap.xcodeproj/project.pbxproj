@@ -14,7 +14,7 @@
 		9DE931EF1B2369D800C5AD86 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931ED1B2369D800C5AD86 /* LoginViewController.swift */; };
 		9DE931F01B2369D800C5AD86 /* OTMclient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931EE1B2369D800C5AD86 /* OTMclient.swift */; };
 		9DE931F41B236ADB00C5AD86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DE931F31B236ADB00C5AD86 /* Main.storyboard */; };
-		9DE931F61B237B0100C5AD86 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931F51B237B0100C5AD86 /* TabBarController.swift */; };
+		9DE931F61B237B0100C5AD86 /* StudentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931F51B237B0100C5AD86 /* StudentInfoViewController.swift */; };
 		9DE931F81B2497D200C5AD86 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931F71B2497D200C5AD86 /* MapViewController.swift */; };
 		9DE931FA1B249FDF00C5AD86 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931F91B249FDF00C5AD86 /* TableViewController.swift */; };
 		9DE931FC1B24AA9200C5AD86 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931FB1B24AA9200C5AD86 /* Student.swift */; };
@@ -44,7 +44,7 @@
 		9DE931ED1B2369D800C5AD86 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9DE931EE1B2369D800C5AD86 /* OTMclient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMclient.swift; sourceTree = "<group>"; };
 		9DE931F31B236ADB00C5AD86 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		9DE931F51B237B0100C5AD86 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		9DE931F51B237B0100C5AD86 /* StudentInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInfoViewController.swift; sourceTree = "<group>"; };
 		9DE931F71B2497D200C5AD86 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		9DE931F91B249FDF00C5AD86 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		9DE931FB1B24AA9200C5AD86 /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
@@ -142,7 +142,7 @@
 				9DE931F71B2497D200C5AD86 /* MapViewController.swift */,
 				9DE931F91B249FDF00C5AD86 /* TableViewController.swift */,
 				9DE931ED1B2369D800C5AD86 /* LoginViewController.swift */,
-				9DE931F51B237B0100C5AD86 /* TabBarController.swift */,
+				9DE931F51B237B0100C5AD86 /* StudentInfoViewController.swift */,
 				9DE931FD1B2A713D00C5AD86 /* LocationSelectionViewController.swift */,
 				9DE931FF1B2A743000C5AD86 /* URLMapViewController.swift */,
 			);
@@ -252,7 +252,7 @@
 				9DE931EF1B2369D800C5AD86 /* LoginViewController.swift in Sources */,
 				9DE931FA1B249FDF00C5AD86 /* TableViewController.swift in Sources */,
 				9DE932001B2A743000C5AD86 /* URLMapViewController.swift in Sources */,
-				9DE931F61B237B0100C5AD86 /* TabBarController.swift in Sources */,
+				9DE931F61B237B0100C5AD86 /* StudentInfoViewController.swift in Sources */,
 				9DE931F01B2369D800C5AD86 /* OTMclient.swift in Sources */,
 				9DE931F81B2497D200C5AD86 /* MapViewController.swift in Sources */,
 				9DE931FC1B24AA9200C5AD86 /* Student.swift in Sources */,

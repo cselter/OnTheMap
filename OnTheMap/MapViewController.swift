@@ -33,11 +33,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
      }
      
      override func viewDidAppear(animated: Bool) {
-          // TODO: Might not need
-          
-          // TODO: add overlay view that shows when loading to prevent user touching other views before they're ready
-          
-          // TODO: double check to make sure this is working correctly
+          super.viewDidAppear(true)
+          addStudentMapPins()
+          // TODO: ACTIVITY VIEW?
 
      }
      
@@ -183,34 +181,4 @@ class MapViewController: UIViewController, MKMapViewDelegate {
           self.dismissViewControllerAnimated(true, completion: nil)
           
      }
-
-     
-
-     // TODO: IF NOT USED, REMOVE IT
-     func showActivityIndicatory(uiView: UIView) {
-          var container: UIView = UIView()
-          container.frame = uiView.frame
-          container.center = uiView.center
-          container.backgroundColor = UIColor.blackColor()
-     
-          var loadingView: UIView = UIView()
-          loadingView.frame = CGRectMake(0, 0, 80, 80)
-          loadingView.center = uiView.center
-          loadingView.backgroundColor = UIColor.whiteColor()
-          loadingView.clipsToBounds = true
-          loadingView.layer.cornerRadius = 10
-          
-          var actInd: UIActivityIndicatorView = UIActivityIndicatorView()
-          actInd.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
-          actInd.activityIndicatorViewStyle =
-               UIActivityIndicatorViewStyle.WhiteLarge
-          actInd.center = CGPointMake(loadingView.frame.size.width / 2,
-               loadingView.frame.size.height / 2);
-          loadingView.addSubview(actInd)
-          container.addSubview(loadingView)
-          uiView.addSubview(container)
-          actInd.startAnimating()
-     }
-     
-     
 }

@@ -17,6 +17,8 @@ class OTMclient : NSObject {
      static let UdacityLoginURL : String = "https://www.udacity.com/api/session"
      static let UdacityStudentDataURL : String = "https://www.udacity.com/api/users/"
      static let ParseStudentLocationDataURL : String = "https://api.parse.com/1/classes/StudentLocation"
+     static let ParseAppID : String = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+     static let ParseAPI : String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
      
      var username: String? = nil // DO I NEED THIS?
      var sessionID : String? = nil // DO I NEED THIS?
@@ -177,21 +179,18 @@ class OTMclient : NSObject {
           ]
           
           let parseRequest = NSMutableURLRequest(URL: NSURL(string: OTMclient.ParseStudentLocationDataURL + OTMclient.escapedParameters(methodParameters))!)
-          parseRequest.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-          parseRequest.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+          parseRequest.addValue("\(OTMclient.ParseAppID)", forHTTPHeaderField: "X-Parse-Application-Id")
+          parseRequest.addValue("\(OTMclient.ParseAPI)", forHTTPHeaderField: "X-Parse-REST-API-Key")
           let session = NSURLSession.sharedSession()
           let task = session.dataTaskWithRequest(parseRequest) { data, response, error in
                if error != nil { // If request errors
                     completionHandler(data: nil, errorString: error!.localizedDescription)
                     return
                } // otherwise, use data
-               // println(NSString(data: data, encoding: NSUTF8StringEncoding))
                
                var parsingError: NSError? = nil
                
                let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
-               
-               // println(parsedResult)
                
                if parsingError != nil {
                     completionHandler(data: nil, errorString: "Unable to load students data")
@@ -207,11 +206,79 @@ class OTMclient : NSObject {
      // **************************************
      // * Post Student Location to Parse API *
      // **************************************
-     // TODO: INCOMPLETE - UNTESTED
-     func postStudentLocation(enteredURL: String, lat: CLLocationDegrees, long: CLLocationDegrees, mapString: String) {
+     func postStudentLocation(enteredURL: String, lat: CLLocationDegrees, long: CLLocationDegrees, mapString: String, completionHandler: (success: Bool?) -> Void) {
+          // first query for existing post
+          queryForStudentLocation() { data, error in
+
+               if error == nil {   // if no error
+                    if let data = data { // and data is not nil
+                         if data.count > 0 { // and count of objects is greater than 0
+                              println("posts!")
+                         } else { // otherwise empty array
+                              println("no posts")
+                         }
+                    } else {
+                         println("error getting existing data posts blah")
+                    }
+               } else {
+                    println(error)
+               }
+               
+               
+      
+               
+               /*
+
+               
+               if let locations = data {
+                    
+                    var locArr: [[String:AnyObject]] = [[String:AnyObject]]()
+                    
+                    
+                    
+                    
+                    for loc in locations {
+                         locArr.append(loc)
+                         println(loc["objectId"]!)
+                         
+                         
+                         let objID = loc["objectId"] as? String
+                         println(objID)
+                         let urlString = "https://api.parse.com/1/classes/StudentLocation/\(objID!)"
+                         let url = NSURL(string: urlString)
+                         let request = NSMutableURLRequest(URL: url!)
+                         request.HTTPMethod = "DELETE"
+                         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+                         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+                         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                         
+                         
+                         
+                         
+                         //request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Cupertino, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.322998, \"longitude\": -122.032182}".dataUsingEncoding(NSUTF8StringEncoding)
+                         let session = NSURLSession.sharedSession()
+                         let task = session.dataTaskWithRequest(request) { data, response, error in
+                              if error != nil { // Handle error…
+                                   return
+                              }
+                              println(NSString(data: data, encoding: NSUTF8StringEncoding))
+                         }
+                         task.resume()
+                         
+                         
+                         
+                         
+                    }
+                   
+               }
+               
+               */
+
+               
+          }
+
           
           appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
-          
           let studentKey = self.appDelegate.loggedInStudent?.studentKey
           let fName = appDelegate.loggedInStudent?.firstName
           let lName = appDelegate.loggedInStudent?.lastName
@@ -219,12 +286,10 @@ class OTMclient : NSObject {
           let longLoc = long
           let mString = mapString
 
-       
-          
-          let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
+          let request = NSMutableURLRequest(URL: NSURL(string: OTMclient.ParseStudentLocationDataURL)!)
           request.HTTPMethod = "POST"
-          request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-          request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+          request.addValue("\(OTMclient.ParseAppID)", forHTTPHeaderField: "X-Parse-Application-Id")
+          request.addValue("\(OTMclient.ParseAPI)", forHTTPHeaderField: "X-Parse-REST-API-Key")
           request.addValue("application/json", forHTTPHeaderField: "Content-Type")
           request.HTTPBody = "{\"uniqueKey\": \"\(studentKey!)\", \"firstName\": \"\(fName!)\", \"lastName\": \"\(lName!)\",\"mapString\": \"\(mString)\", \"mediaURL\": \"\(mString)\",\"latitude\": \(latLoc), \"longitude\": \(longLoc)}".dataUsingEncoding(NSUTF8StringEncoding)
           
@@ -232,20 +297,74 @@ class OTMclient : NSObject {
           let task = session.dataTaskWithRequest(request) { data, response, error in
                if error != nil { // Handle error…
                     println(error)
-                    // CALL ERROR POPUP!
+                    // Unable to post location
+                    var invalidAddress = UIAlertView()
+                    invalidAddress.title = "Unable to post location"
+                    invalidAddress.message = "Please try again later."
+                    invalidAddress.addButtonWithTitle("OK")
+                    invalidAddress.show()
+                    completionHandler(success:false)
                     return
                }
                
-               // dismiss URLMapViewController and refresh map or tableview
                println(NSString(data: data, encoding: NSUTF8StringEncoding))
+               completionHandler(success: true)
           }
-          
-          
           task.resume()
 
 
      }
 
+     
+     
+     // **********************************************
+     // * Check to see if student has already posted *
+     // **********************************************
+     func queryForStudentLocation(completionHandler: (data: [[String: AnyObject]]?, errorString: String?) -> Void) {
+          
+          appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+          let studentKey = self.appDelegate.loggedInStudent?.studentKey
+          
+          let urlString = "https://api.parse.com/1/classes/StudentLocation?where=%7B%22uniqueKey%22%3A%22\(studentKey!)%22%7D"
+          let url = NSURL(string: urlString)
+          let request = NSMutableURLRequest(URL: url!)
+          // TODO: MOVE THESE KEYS TO CONSTANTS
+          request.addValue("\(OTMclient.ParseAppID)", forHTTPHeaderField: "X-Parse-Application-Id")
+          request.addValue("\(OTMclient.ParseAPI)", forHTTPHeaderField: "X-Parse-REST-API-Key")
+          let session = NSURLSession.sharedSession()
+          let task = session.dataTaskWithRequest(request) { data, response, error in
+               if error != nil {
+                    println(error)
+                    completionHandler(data: nil, errorString: error.localizedDescription)
+                    /* Handle error */
+                    return
+               }
+               // use the data
+               //println(NSString(data: data, encoding: NSUTF8StringEncoding))
+               
+               var parsingError: NSError? = nil
+               
+               let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
+               
+               if parsingError != nil {
+                    completionHandler(data: nil, errorString: "Unable to load students data")
+               } else {
+                    if let locations = parsedResult["results"] as? [[String: AnyObject]] {
+                         completionHandler(data: locations, errorString: nil)
+                    }
+               }
+
+          }
+          task.resume()
+     }
+     
+     
+     
+     
+     
+     
+     
+     
      
      /* Helper function: Given a dictionary of parameters, convert to a string for a url */
      class func escapedParameters(parameters: [String : AnyObject]) -> String {

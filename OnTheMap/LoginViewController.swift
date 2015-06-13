@@ -40,6 +40,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           self.passwordTextField.text = "9cj25h7a"
      }
      
+     // ******************************************
+     // * Dismiss keyboard if return key pressed *
+     // ******************************************
      func textFieldShouldReturn(textField: UITextField) -> Bool {
           if usernameTextField.isFirstResponder() || passwordTextField.isFirstResponder() {
                usernameTextField.resignFirstResponder()
@@ -48,11 +51,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           return true
      }
      
+     // **********************************************************
+     // * Dismiss keyboard if tap is registered outside of field *
+     // **********************************************************
      override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
           usernameTextField.resignFirstResponder()
           passwordTextField.resignFirstResponder()
      }
      
+     // *********************************
+     // * Initiate Login to Udacity API *
+     // *********************************
      @IBAction func loginButtonTouchUp(sender: AnyObject) {
           let udacityClient = OTMclient()
           
@@ -95,7 +104,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           }
      }
      
-     // Get Student Data from Udacity
+     // *********************************
+     // * Get Student Data from Udacity *
+     // *********************************
      func getStudentData(udacityClient: OTMclient) {
 
           let key = appDelegate.loggedInStudent?.studentKey
@@ -114,7 +125,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           }
      }
      
-     // Login Successful, Move to Tab Bar Controller
+     // ************************************************
+     // * Login Successful, Move to Tab Bar Controller *
+     // ************************************************
      func completeLogin() {
           dispatch_async(dispatch_get_main_queue(), {
                self.passwordTextField.text = "" // remove password 
@@ -125,7 +138,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           })
      }
      
-     // Update Error Label with Message
+     // ***********************************
+     // * Update Error Label with Message *
+     // ***********************************
      func displayError(errorString: String?) {
           dispatch_async(dispatch_get_main_queue(), {
                if let errorString = errorString {
@@ -134,14 +149,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           })
      }
      
-     // Open Udacity Sign Up Page
+     // *****************************
+     // * Open Udacity Sign Up Page *
+     // *****************************
      @IBAction func signUpButton(sender: AnyObject) {
           if let url = NSURL(string: "https://www.udacity.com/account/auth#!/signup") {
                UIApplication.sharedApplication().openURL(url)
           }
      }
      
-     // Shake the screen if login failure
+     // *************************************
+     // * Shake the screen if login failure *
+     // *************************************
      func loginFailShake() {
           let anim = CAKeyframeAnimation( keyPath:"transform" )
           anim.values = [
@@ -154,5 +173,4 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           
           self.view.layer.addAnimation(anim, forKey: nil)
      }
-     
 }

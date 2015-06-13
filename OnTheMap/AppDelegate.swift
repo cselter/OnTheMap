@@ -16,10 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      // currently logged in student (user)
      var loggedInStudent : Student?
      // array of student data from Parse API
-     //var allStudents : [Student]?
      var allStudents : [Student] = [Student]()
-     
-     //var studentDataArr: [Student] = [Student]()
      
      func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
           return true

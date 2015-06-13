@@ -10,27 +10,34 @@ import Foundation
 import UIKit
 import MapKit
 
-class LocationSelectionViewController: UIViewController {
+class LocationSelectionViewController: UIViewController, UITextFieldDelegate {
      
      @IBOutlet weak var findOnTheMapButton: UIButton!
-     @IBOutlet weak var locationTextView: UITextView!
      @IBOutlet weak var cancelButton: UIButton!
+     @IBOutlet weak var locationTextField: UITextField!
 
      override func viewDidLoad() {
           findOnTheMapButton.layer.cornerRadius = 5
           findOnTheMapButton.layer.borderWidth = 1
           findOnTheMapButton.layer.borderColor = UIColor.grayColor().CGColor
           findOnTheMapButton.backgroundColor = UIColor.whiteColor()
-          locationTextView.backgroundColor = UIColor.clearColor()
+          locationTextField.backgroundColor = UIColor.clearColor()
+          locationTextField.delegate = self
      }
      
+     // **************************
+     // * Returns to previous VC *
+     // **************************
      @IBAction func cancelButtonTouchUp(sender: AnyObject) {
           self.dismissViewControllerAnimated(true, completion: nil)
      }
    
+     // *************************************************************
+     // * Locates address entered and sends to URLMapViewController *
+     // *************************************************************
      @IBAction func findOnMapButtonTouchUp(sender: AnyObject) {
           
-          let address = locationTextView.text as String
+          let address = locationTextField.text as String
           var geocoder = CLGeocoder()
           
           geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
@@ -53,5 +60,22 @@ class LocationSelectionViewController: UIViewController {
                     invalidAddress.show()
                }
           })
+     }
+     
+     // **********************************************************
+     // * Dismiss keyboard if tap is registered outside of field *
+     // **********************************************************
+     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+          locationTextField.resignFirstResponder()
+     }
+     
+     // ******************************************
+     // * Dismiss keyboard if return key pressed *
+     // ******************************************
+     func textFieldShouldReturn(textField: UITextField) -> Bool {
+          if locationTextField.isFirstResponder() {
+               locationTextField.resignFirstResponder()
+          }
+          return true
      }
 }

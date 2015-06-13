@@ -10,24 +10,19 @@ import Foundation
 import UIKit
 
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
-     
-     
-     var appDelegate: AppDelegate!
-     
-     var studentList: [Student]?
    
      @IBOutlet var tableView: UITableView!
      @IBOutlet weak var refreshButton: UIBarButtonItem!
      @IBOutlet weak var locationButton: UIBarButtonItem!
      @IBOutlet weak var logoutButton: UIBarButtonItem!
      
+     var appDelegate: AppDelegate!
+     var studentList: [Student]?
+     
      override func viewDidLoad() {
           super.viewDidLoad()
-          
           appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
-          
           studentList = appDelegate?.allStudents
-          
           tableView.delegate = self
      }
      
@@ -41,13 +36,19 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                emptyMemesAlert.addButtonWithTitle("OK")
                emptyMemesAlert.show()
           }
+          self.tableView.reloadData()
      }
      
-     // table cell count
+     // ********************
+     // * Table Cell Count *
+     // ********************
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
           return studentList!.count
      }
-     // Return cell for each grid row
+     
+     // *********************************
+     // * Return cell for each grid row *
+     // *********************************
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
           let cell = tableView.dequeueReusableCellWithIdentifier("StudentTableCell", forIndexPath: indexPath) as! UITableViewCell
           let studentCell = studentList![indexPath.row]
@@ -58,7 +59,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
           return cell
      }
      
-     // Open URL in Safari when row is selected
+     // *******************************************
+     // * Open URL in Safari when row is selected *
+     // *******************************************
      func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
           dispatch_async(dispatch_get_main_queue()) {
                if let mediaURL = self.studentList![indexPath.row].mediaURL {
@@ -89,10 +92,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
           self.dismissViewControllerAnimated(true, completion: nil)
      }
      
-     
-     
-     
-     // refresh the data model
+     // **************************
+     // * Refresh the data model *
+     // **************************
      @IBAction func refreshButtonTouchUp(sender: AnyObject) {
           
           let dataClient = OTMclient.sharedInstance()
@@ -109,6 +111,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                               studentDataArr.append(Student(studentData: studentResults))
                          }
                          appDelegate.allStudents = studentDataArr
+                         
+                         self.studentList = studentDataArr
                     }
                } else {
                     if let error = errorString {
@@ -118,6 +122,4 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
           }
           self.tableView.reloadData()
      }
-     
 }
-

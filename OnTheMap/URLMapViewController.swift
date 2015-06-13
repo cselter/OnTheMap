@@ -10,14 +10,12 @@ import Foundation
 import UIKit
 import MapKit
 
-class URLMapViewController: UIViewController, MKMapViewDelegate {
-     
+class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
      
      @IBOutlet weak var cancelButton: UIButton!
      @IBOutlet weak var submitButton: UIButton!
      @IBOutlet weak var mapView: MKMapView!
-     @IBOutlet weak var mediaURLtextField: UITextView!
-     
+     @IBOutlet weak var mediaURLtextField: UITextField!
      
      var mapString: String?
      var geolocation: CLPlacemark!
@@ -32,11 +30,11 @@ class URLMapViewController: UIViewController, MKMapViewDelegate {
           mediaURLtextField.backgroundColor = UIColor.clearColor()
           
           mapView.delegate = self
+          mediaURLtextField.delegate = self
      }
      
      override func viewDidAppear(animated: Bool) {
           self.mapView.addAnnotation(MKPlacemark(placemark: geolocation))
-          
           self.lat = geolocation.location.coordinate.latitude
           self.long = geolocation.location.coordinate.longitude
           
@@ -47,30 +45,76 @@ class URLMapViewController: UIViewController, MKMapViewDelegate {
           self.mapView.setCamera(zoomView, animated: true)
      }
      
+     // *************************************************
+     // * Return to location selection screen to update *
+     // *************************************************
      @IBAction func editLocationButtonTouchUp(sender: AnyObject) {
           self.dismissViewControllerAnimated(true, completion: nil)
      }
      
+     // ***************************************************
+     // * Return to original tabbed view (map/table view) *
+     // ***************************************************
      @IBAction func cancelButtonTouchUp(sender: AnyObject) {
           self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
      }
      
+     // ****************************************************
+     // * Submit location and url to OTMclient for posting *
+     // ****************************************************
      @IBAction func submitButtonTouchUp(sender: AnyObject) {
-          
           var finalURL: String?
+          var canBeDismissed: Bool = false
           
-          if mediaURLtextField.text.lowercaseString.hasPrefix("http://") || mediaURLtextField.text.lowercaseString.hasPrefix("https://") {
-               finalURL = mediaURLtextField.text
+          if finalURL == "" {
+               // Empty URL
+               var invalidAddress = UIAlertView()
+               invalidAddress.title = "Invalid URL"
+               invalidAddress.message = "Please enter a URL."
+               invalidAddress.addButtonWithTitle("OK")
+               invalidAddress.show()
           } else {
-               finalURL = "http://\(mediaURLtextField.text)"
-          }
+               if mediaURLtextField.text.lowercaseString.hasPrefix("http://") || mediaURLtextField.text.lowercaseString.hasPrefix("https://") {
+                    finalURL = mediaURLtextField.text
+                    } else {
+                    finalURL = "http://\(mediaURLtextField.text)"
+                    }
 
-          let udacityClient = OTMclient()
+               let udacityClient = OTMclient()
           
-
-          udacityClient.postStudentLocation(finalURL!, lat: lat!, long: long!, mapString: finalURL!)
+               udacityClient.postStudentLocation(finalURL!, lat: lat!, long: long!, mapString: finalURL!) { success in
+                    
+                    if let success = success {
+                         if success {
+                              canBeDismissed = true
+                         } else {
+                              println("unsuccessful post")
+                         }
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                         if canBeDismissed == true {
+                              self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                         }
+                    }
+               }
+          }
      }
      
-          
-
+     // **********************************************************
+     // * Dismiss keyboard if tap is registered outside of field *
+     // **********************************************************
+     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+          mediaURLtextField.resignFirstResponder()
+     }
+     
+     // ******************************************
+     // * Dismiss keyboard if return key pressed *
+     // ******************************************
+     func textFieldShouldReturn(textField: UITextField) -> Bool {
+          if mediaURLtextField.isFirstResponder() {
+               mediaURLtextField.resignFirstResponder()
+          }
+          return true
+     }
 }
