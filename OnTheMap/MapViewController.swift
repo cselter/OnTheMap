@@ -38,6 +38,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
           // TODO: add overlay view that shows when loading to prevent user touching other views before they're ready
           
           // TODO: double check to make sure this is working correctly
+
      }
      
      // ********************************************

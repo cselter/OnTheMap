@@ -106,7 +106,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                if let studentData = data {
                     dispatch_async(dispatch_get_main_queue()) {
                          self.appDelegate.loggedInStudent?.firstName = studentData["firstName"] as? String
-                         self.appDelegate.loggedInStudent?.firstName = studentData["lastName"] as? String
+                         self.appDelegate.loggedInStudent?.lastName = studentData["lastName"] as? String
                     }
                } else {
                     self.displayError(errorString)

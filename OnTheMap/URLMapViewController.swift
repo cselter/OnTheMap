@@ -18,6 +18,7 @@ class URLMapViewController: UIViewController, MKMapViewDelegate {
      @IBOutlet weak var mapView: MKMapView!
      @IBOutlet weak var mediaURLtextField: UITextView!
      
+     
      var mapString: String?
      var geolocation: CLPlacemark!
      var lat:CLLocationDegrees?
@@ -63,9 +64,11 @@ class URLMapViewController: UIViewController, MKMapViewDelegate {
           } else {
                finalURL = "http://\(mediaURLtextField.text)"
           }
-          println(lat)
-          println(long)
-          // postStudentLocation(finalURL!)
+
+          let udacityClient = OTMclient()
+          
+
+          udacityClient.postStudentLocation(finalURL!, lat: lat!, long: long!, mapString: finalURL!)
      }
      
           
