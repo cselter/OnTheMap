@@ -169,7 +169,47 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                }
           }
      }
-            
+     
+     // ****************************************************
+     // * Post new student location, checking for existing *
+     // ****************************************************
+     @IBAction func locationButtonTouchUp(sender: AnyObject) {
+          let client = OTMclient.sharedInstance()
+          client.queryForStudentLocation() {
+               data, error in
+               
+               if error == nil { // if no error
+                    if let data = data { // and data is not nil
+                         if data.count > 0 { // and count of objects is >0
+                              // existing posts found, alert user
+                              // TODO: ZOOM TO LOCATION
+                              var alert = UIAlertController(title: "Existing Pin", message: "You've already posted your location.", preferredStyle: UIAlertControllerStyle.Alert)
+                              alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+                              self.presentViewController(alert, animated: true, completion: nil)
+                              alert.addAction(UIAlertAction(title: "Delete & Post New", style: .Default, handler: { action in
+                                   switch action.style{
+                                   case .Default:
+                                        println("default")
+                                        client.deleteExistingPosts(data)
+                                        // SEGUE TO LOCATION ENTRY
+                                        self.performSegueWithIdentifier("OpenLocationSelectVC", sender: self)
+                                   case .Cancel:
+                                        println("cancel")
+                                        self.dismissViewControllerAnimated(true, completion: nil)
+                                   case .Destructive:
+                                        println("destructive")
+                                   }
+                              }))
+                         } else {
+                              self.performSegueWithIdentifier("OpenLocationSelectVC", sender: self)
+                         }
+                    }
+               } else {
+                    println("unable to query existing posts")
+               }
+          }
+     }
+     
      // *****************************************************
      // * Log out of Udacity Session and Return to Login VC *
      // *****************************************************

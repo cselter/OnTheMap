@@ -207,65 +207,7 @@ class OTMclient : NSObject {
      // **************************************
      // * Post Student Location to Parse API *
      // **************************************
-     func postStudentLocation(overwrite: Bool, enteredURL: String, lat: CLLocationDegrees, long: CLLocationDegrees, mapString: String, completionHandler: (postsExist: Bool?, success: Bool?) -> Void) {
-          // first query for existing post
-          queryForStudentLocation() { data, error in
-
-               if error == nil {   // if no error
-                    if let data = data { // and data is not nil
-                         if data.count > 0 { // and count of objects is greater than 0
-                              println("posts!")
-                              
-                              // Delete existing posts
-                              if overwrite {
-                                   self.deleteExistingPosts(data)
-                                   self.confirmedPostStudentLocation(enteredURL, lat: lat, long: long, mapString: mapString) { success in
-                                        
-                                        if success != nil {
-                                             if success == true {
-                                                  println("post successful")
-                                             } else {
-                                                  println("post unsuccessful")
-                                             }
-                                        } else {
-                                             println("success = nil")
-                                        }
-                                   }
-                              } else { // if overwrite is no
-                                   completionHandler(postsExist: true, success: false)
-                              }
-                              
-                         } else {
-                              // Empty array = no posts
-                              // Go ahead and post it
-                              self.confirmedPostStudentLocation(enteredURL, lat: lat, long: long, mapString: mapString) { success in
-                                   
-                                   if success != nil {
-                                        if success == true {
-                                             println("post successful")
-                                        } else {
-                                             println("post unsuccessful")
-                                        }
-                                   } else {
-                                        println("success = nil")
-                                   }
-                                   
-                                   completionHandler(postsExist: false, success: true)
-                              }
-                         }
-                    } else {
-                         println("error getting existing data posts blah")
-                    }
-               } else {
-                    println(error)
-               }
-          }
-     }
-
-     // ******************
-     // * Confirmed Post *
-     // ******************
-     func confirmedPostStudentLocation(enteredURL: String, lat: CLLocationDegrees, long: CLLocationDegrees, mapString: String, completionHandler: (success: Bool?) -> Void) {
+     func postStudentLocation(enteredURL: String, lat: CLLocationDegrees, long: CLLocationDegrees, mapString: String, completionHandler: (success: Bool?) -> Void) {
           
           self.appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
           let studentKey = self.appDelegate.loggedInStudent?.studentKey

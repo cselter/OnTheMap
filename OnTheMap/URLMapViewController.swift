@@ -82,44 +82,8 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
 
                let udacityClient = OTMclient()
           
-               udacityClient.postStudentLocation(false, enteredURL: finalURL!, lat: lat!, long: long!, mapString: finalURL!) { postsExist, success in
-                    // TODO: CHANGE THIS SO IT CHECKS WHEN USER CLICKS POST PIN 
-                    // TODO: SEPARATE OUT QUERY FROM POST IN OTM CLIENT!!!!!
-                    
-                    
-                    if let postsExist = postsExist {
-                         if postsExist == true {
-                              // ALERT!
-                              var alert = UIAlertController(title: "Post Exists", message: "You've already posted your location.", preferredStyle: UIAlertControllerStyle.Alert)
-                              alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-                              self.presentViewController(alert, animated: true, completion: nil)
-                              
-                              alert.addAction(UIAlertAction(title: "Delete & Post New", style: .Default, handler: { action in
-                                   switch action.style{
-                                   case .Default:
-                                        println("default")
-                                        // call postStudentLocation again with overwrite = true
-                                        udacityClient.postStudentLocation(true, enteredURL: finalURL!, lat: self.lat!, long: self.long!, mapString: finalURL!) {
-                                             postsExist, success in
-                                             if success != nil {
-                                                  if success == true {
-                                                       canBeDismissed = true
-                                                  } else {
-                                                       println("after alert, not successful")
-                                                  }
-                                             }
-                                        }
-                                   case .Cancel:
-                                        println("cancel")
-                                        // dismiss and go back to map/table
-                                        canBeDismissed = true
-                                   case .Destructive:
-                                        println("destructive")
-                                   }
-                              }))
-                         }
-                    }
-                    
+               udacityClient.postStudentLocation(finalURL!, lat: lat!, long: long!, mapString: finalURL!) { success in
+
                     if let success = success {
                          if success {
                               canBeDismissed = true
