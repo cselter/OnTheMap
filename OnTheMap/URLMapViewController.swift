@@ -106,6 +106,19 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                               
                          } else {
                               println("unsuccessful post")
+                              var failedPostAlert = UIAlertController(title: "Unable to Post", message: "Retry?", preferredStyle: UIAlertControllerStyle.Alert)
+                              
+                              failedPostAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
+                              }))
+                              
+                              failedPostAlert.addAction(UIAlertAction(title: "Retry", style: .Default, handler: { action in
+                                   self.submitButtonTouchUp(self)
+                              }))
+
+                              
+                              
+                              self.presentViewController(failedPostAlert, animated: true, completion: nil)
+
                          }
                     }
                     

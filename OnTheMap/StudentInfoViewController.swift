@@ -28,6 +28,7 @@ class StudentInfoViewController: UIViewController {
      var long: Double?
      var loc: CLPlacemark?
      var mediaURL: String?
+     let client = OTMclient.sharedInstance()
      
      override func viewDidLoad() {
           super.viewDidLoad()
@@ -37,7 +38,100 @@ class StudentInfoViewController: UIViewController {
      override func viewDidAppear(animated: Bool) {
           // Refreshes this page each time it is viewed with current info
           // from the appDelegate
+          updateStudentInfoLabels()
+          checkForExistingLocation()
+     }
+     
+     @IBAction func refreshButtonTouchUp(sender: AnyObject) {
+          checkForExistingLocation()
+     }
+     
+     // ***************************************
+     // * Query for existing student location *
+     // ***************************************
+     func checkForExistingLocation() {
+          client.queryForStudentLocation() {
+               data, error in
+               
+               if error == nil { // if no error
+                    if let data = data { // and data is not nil
+                         if data.count > 0 { // and count of objects is >0
+                              // existing posts found
+                              // zoom to existing pin
+                              
+                              var existingLat: Double = data[0]["latitude"] as! Double
+                              var existingLong: Double = data[0]["longitude"] as! Double
+                              
+                              // update the variables
+                              self.lat = existingLat
+                              self.long = existingLong
+                              self.mediaURL = data[0]["mediaURL"] as? String
+                              
+                              // update the appDelegate
+                              self.appDelegate.loggedInStudent?.latitude = self.lat
+                              self.appDelegate.loggedInStudent?.longitude = self.long
+                              self.appDelegate.loggedInStudent?.mediaURL = self.mediaURL
+                              
+                              dispatch_async(dispatch_get_main_queue()) {
+                                   self.latLabel.text = self.appDelegate.loggedInStudent?.latitude?.description
+                                   
+                                   self.longLabel.text = self.appDelegate.loggedInStudent?.longitude?.description
+                                   
+                                   self.mediaURLLabel.text = self.appDelegate.loggedInStudent?.mediaURL
+                              }
+                              var latCord: CLLocationDegrees = existingLat
+                              var longCord: CLLocationDegrees = existingLong
+                              
+                              let existingLoc = CLLocationCoordinate2DMake(latCord, longCord)
+                              
+                              self.addPinsAndZoom()
+                         }
+                    }
+               }
+          }
+     }
+     
+     // ****************************************************
+     // * Post new student location, checking for existing *
+     // ****************************************************
+     @IBAction func locationButtonTouchUp(sender: AnyObject) {
+          let client = OTMclient.sharedInstance()
+          client.queryForStudentLocation() {
+               data, error in
+               
+               if error == nil { // if no error
+                    if let data = data { // and data is not nil
+                         if data.count > 0 { // and count of objects is >0
+                              // alert the user of the existing location pin
+                              var alert = UIAlertController(title: "Existing Pin", message: "You've already posted your location.", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                              
+                              alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
+                                   
+                              }))
+                              
+                              alert.addAction(UIAlertAction(title: "Delete & Post New", style: .Default, handler: { action in
+                                   client.deleteExistingPosts(data)
+                                   // Segue to Location Entry
+                                   self.performSegueWithIdentifier("OpenLocationSelectVCfromStudInfo", sender: self)
+                              }))
+                              
+                              self.presentViewController(alert, animated: true, completion: nil)
+                         } else {
+                              self.performSegueWithIdentifier("OpenLocationSelectVCfromStudInfo", sender: self)
+                         }
+                    }
+               } else {
+                    println("unable to query existing posts")
+               }
+          }
+     }
+     
+     // **************************************
+     // * Update the labels from AppDelegate *
+     // **************************************
+     func updateStudentInfoLabels() {
           
+          // update View's Udacity Student Info
           if let userName = appDelegate.loggedInStudent?.firstName {
                userfName = userName
           } else {
@@ -55,51 +149,31 @@ class StudentInfoViewController: UIViewController {
           } else {
                userKey = "unavail"
           }
-     
-          if let url = appDelegate.loggedInStudent?.mediaURL {
-               mediaURL = url
-          } else {
-               mediaURL = "not posted yet"
-          }
-          
-          if let latLoc = appDelegate.loggedInStudent?.latitude {
-               lat = latLoc
-          } else {
-               lat = nil
-          }
-          if let longLoc = appDelegate.loggedInStudent?.longitude {
-               long = longLoc
-          } else {
-               long = nil
-          }
-          
+
           // Update the labels
           nameLabel.text = userfName! + " " + userlName!
           studentKey.text = self.userKey
-          mediaURLLabel.text = self.mediaURL
-          
-          if lat != nil {
-               latLabel.text = String(stringInterpolationSegment: self.lat!)
-          } else {
-               latLabel.text = "not posted yet"
-          }
-          
-          if long != nil {
-               longLabel.text = String(stringInterpolationSegment: self.long!)
-          } else {
-               longLabel.text = "not posted yet"
-          }
-          
-          // Add Pin & Zoom in Map
+         
+          addPinsAndZoom()
+     }
+     
+     // ********************************
+     // * Zoom to existing/current Pin *
+     // ********************************
+     func addPinsAndZoom(){
           if lat != nil && long != nil {
-               let currLoc = CLLocationCoordinate2DMake(lat!, long!)
-               let mapPin = MKPointAnnotation()
-               mapPin.coordinate = currLoc
-               self.mapView.addAnnotation(mapPin)
                
-               var zoomInView = MKMapCamera(lookingAtCenterCoordinate: currLoc, fromEyeCoordinate: currLoc, eyeAltitude: 10000.0)
-               self.mapView.setCamera(zoomInView, animated: true)
+               dispatch_async(dispatch_get_main_queue()) {
+                    self.mapView.removeAnnotations(self.mapView.annotations)
+                    
+                    let currLoc = CLLocationCoordinate2DMake(self.lat!, self.long!)
+                    let mapPin = MKPointAnnotation()
+                    mapPin.coordinate = currLoc
+                    self.mapView.addAnnotation(mapPin)
+                    
+                    var zoomInView = MKMapCamera(lookingAtCenterCoordinate: currLoc, fromEyeCoordinate: currLoc, eyeAltitude: 10000.0)
+                    self.mapView.setCamera(zoomInView, animated: true)
+               }
           }
      }
 }
-

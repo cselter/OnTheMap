@@ -137,7 +137,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="307" y="415"/>
+            <point key="canvasLocation" x="401" y="-312"/>
         </scene>
         <!--List-->
         <scene sceneID="N3H-Lt-RBD">
@@ -237,7 +237,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OT1-0q-PEZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1768" y="734"/>
+            <point key="canvasLocation" x="1032" y="436"/>
         </scene>
         <!--Location Selection View Controller-->
         <scene sceneID="LGb-yZ-VI8">
@@ -263,12 +263,18 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="bqs-Ti-igH">
+                                        <rect key="frame" x="282" y="131" width="37" height="37"/>
+                                        <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.2722383576438705" green="0.50337455180269408" blue="0.71913253121414145" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Xfk-Z4-iNk" firstAttribute="leading" secondItem="Ex0-AL-a96" secondAttribute="leadingMargin" id="0RA-36-cxj"/>
                                     <constraint firstItem="Xfk-Z4-iNk" firstAttribute="trailing" secondItem="Ex0-AL-a96" secondAttribute="trailingMargin" id="1Ef-4Z-idk"/>
+                                    <constraint firstItem="bqs-Ti-igH" firstAttribute="centerX" secondItem="Xfk-Z4-iNk" secondAttribute="centerX" id="TTL-7H-PJk"/>
                                     <constraint firstItem="Xfk-Z4-iNk" firstAttribute="top" secondItem="Ex0-AL-a96" secondAttribute="top" constant="14" id="mLp-sf-P18"/>
+                                    <constraint firstItem="bqs-Ti-igH" firstAttribute="top" secondItem="Xfk-Z4-iNk" secondAttribute="bottom" constant="77" id="zZ4-qM-7ut"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HMC-n1-sow">
@@ -340,6 +346,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="bqs-Ti-igH" id="IfZ-kz-9DS"/>
                         <outlet property="cancelButton" destination="HMC-n1-sow" id="4WK-7f-Euc"/>
                         <outlet property="findOnTheMapButton" destination="0bf-WM-Vx7" id="Qe4-Ho-glw"/>
                         <outlet property="locationTextField" destination="Xfk-Z4-iNk" id="1Y9-vj-sBt"/>
@@ -348,7 +355,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JcM-Yw-EL0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2505" y="372"/>
+            <point key="canvasLocation" x="1032" y="1284"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="wEd-1H-6kn">
@@ -444,7 +451,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AGJ-ag-qmt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3146" y="372"/>
+            <point key="canvasLocation" x="1722" y="1284"/>
         </scene>
         <!--Map-->
         <scene sceneID="EuD-60-deR">
@@ -461,6 +468,10 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="f6e-hy-UYL">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                             </mapView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="B3g-kz-TMc">
+                                <rect key="frame" x="282" y="291" width="37" height="37"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5aI-2z-Nyv">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <items>
@@ -488,24 +499,20 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="B3g-kz-TMc">
-                                <rect key="frame" x="282" y="291" width="37" height="37"/>
-                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="5aI-2z-Nyv" secondAttribute="trailing" id="1CH-Vy-2Uz"/>
-                            <constraint firstItem="VFq-XE-8Kd" firstAttribute="top" secondItem="daT-E2-ybW" secondAttribute="bottom" constant="11" id="228-0l-zQO"/>
-                            <constraint firstItem="B3g-kz-TMc" firstAttribute="centerX" secondItem="VFq-XE-8Kd" secondAttribute="centerX" id="5q7-nM-fMW"/>
-                            <constraint firstItem="f6e-hy-UYL" firstAttribute="top" secondItem="5aI-2z-Nyv" secondAttribute="top" id="LKP-Q5-fI7"/>
-                            <constraint firstItem="f6e-hy-UYL" firstAttribute="leading" secondItem="5aI-2z-Nyv" secondAttribute="leading" id="Nfi-fx-c9a"/>
-                            <constraint firstItem="5aI-2z-Nyv" firstAttribute="centerX" secondItem="VFq-XE-8Kd" secondAttribute="centerX" id="NlY-k5-nAx"/>
-                            <constraint firstItem="5aI-2z-Nyv" firstAttribute="top" secondItem="daT-E2-ybW" secondAttribute="bottom" id="RPU-uD-Bwq"/>
-                            <constraint firstItem="f6e-hy-UYL" firstAttribute="trailing" secondItem="5aI-2z-Nyv" secondAttribute="trailing" id="aLt-lo-p8s"/>
-                            <constraint firstItem="cQO-ct-EiX" firstAttribute="top" secondItem="B3g-kz-TMc" secondAttribute="bottom" constant="223" id="h4w-67-sHH"/>
-                            <constraint firstAttribute="bottom" secondItem="f6e-hy-UYL" secondAttribute="bottom" id="jlT-UQ-Pvg"/>
-                            <constraint firstItem="5aI-2z-Nyv" firstAttribute="leading" secondItem="VA0-qZ-oOU" secondAttribute="leading" id="ug3-3D-FXz"/>
+                            <constraint firstItem="f6e-hy-UYL" firstAttribute="trailing" secondItem="5aI-2z-Nyv" secondAttribute="trailing" id="7Vi-x8-S5k"/>
+                            <constraint firstItem="f6e-hy-UYL" firstAttribute="leading" secondItem="VA0-qZ-oOU" secondAttribute="leading" id="bEs-p1-cYk"/>
+                            <constraint firstItem="5aI-2z-Nyv" firstAttribute="top" secondItem="f6e-hy-UYL" secondAttribute="top" id="dD0-0F-GQk"/>
+                            <constraint firstAttribute="bottom" secondItem="f6e-hy-UYL" secondAttribute="bottom" id="fbD-4R-hwY"/>
+                            <constraint firstItem="B3g-kz-TMc" firstAttribute="centerX" secondItem="VFq-XE-8Kd" secondAttribute="centerX" id="m5W-8V-3Pg"/>
+                            <constraint firstAttribute="trailing" secondItem="f6e-hy-UYL" secondAttribute="trailing" id="nmc-zm-fd7"/>
+                            <constraint firstItem="5aI-2z-Nyv" firstAttribute="leading" secondItem="f6e-hy-UYL" secondAttribute="leading" id="pFC-Dz-ceY"/>
+                            <constraint firstItem="5aI-2z-Nyv" firstAttribute="top" secondItem="daT-E2-ybW" secondAttribute="bottom" id="rvc-pg-ShB"/>
+                            <constraint firstItem="VFq-XE-8Kd" firstAttribute="centerX" secondItem="5aI-2z-Nyv" secondAttribute="centerX" id="sIX-ay-8rD"/>
+                            <constraint firstItem="cQO-ct-EiX" firstAttribute="top" secondItem="B3g-kz-TMc" secondAttribute="bottom" constant="223" id="tT0-hF-LUe"/>
+                            <constraint firstItem="VFq-XE-8Kd" firstAttribute="top" secondItem="daT-E2-ybW" secondAttribute="bottom" constant="11" id="xF2-si-1An"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map" id="BmJ-12-yG3" userLabel="Map"/>
@@ -520,7 +527,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Pp-MH-qWD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1768" y="84"/>
+            <point key="canvasLocation" x="401" y="436"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Qtz-F9-XeM">
@@ -540,7 +547,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qtD-Ly-L5E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1016" y="415"/>
+            <point key="canvasLocation" x="1032" y="-312"/>
         </scene>
         <!--Student Info View Controller-->
         <scene sceneID="Oq2-OL-3KO">
@@ -563,10 +570,14 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Fd7-cq-c3N"/>
-                                    <barButtonItem image="pin" id="mKV-zX-3tY"/>
+                                    <barButtonItem image="pin" id="mKV-zX-3tY">
+                                        <connections>
+                                            <action selector="locationButtonTouchUp:" destination="TKM-gE-wst" id="ppd-Ck-rVn"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem systemItem="refresh" id="8o8-AZ-TuS">
                                         <connections>
-                                            <action selector="reloadButtonTouchUp:" destination="mlc-YC-onj" id="S8j-PB-i7e"/>
+                                            <action selector="refreshButtonTouchUp:" destination="TKM-gE-wst" id="jcc-VO-YK8"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -718,11 +729,12 @@
                         <outlet property="mediaURLLabel" destination="Uc3-hX-rAR" id="Chf-Qd-ejq"/>
                         <outlet property="nameLabel" destination="t0r-fO-dhj" id="dAr-90-i8B"/>
                         <outlet property="studentKey" destination="UQB-aX-PdK" id="q0c-23-V1B"/>
+                        <segue destination="Vdk-sc-6vf" kind="presentation" identifier="   " id="KcI-Dd-ebT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w8Q-sP-pqF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1016" y="1158"/>
+            <point key="canvasLocation" x="1670" y="436"/>
         </scene>
     </scenes>
     <resources>
@@ -732,6 +744,6 @@
         <image name="pin" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8K6-3y-Fht"/>
+        <segue reference="KcI-Dd-ebT"/>
     </inferredMetricsTieBreakers>
 </document>

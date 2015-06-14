@@ -215,17 +215,19 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                               var zoomView = MKMapCamera(lookingAtCenterCoordinate: existingLoc, fromEyeCoordinate: existingLoc, eyeAltitude: 10000.0)
                               self.mapView.setCamera(zoomView, animated: true)
                               
-                              // Show annotation view after zoomed in
+                              // Show annotation view of pin after zoomed in
                               // * Still working on this *
-                              //NSThread.sleepForTimeInterval(3)
+                              /*
+                              NSThread.sleepForTimeInterval(3)
                               
-                              //let anns = self.mapView.annotationsInMapRect(self.mapView.visibleMapRect) as? MKAnnotation
+                              let anns = self.mapView.annotationsInMapRect(self.mapView.visibleMapRect) as? MKAnnotation
                               
-                              //println(anns)
+                              println(anns)
                               
-                              //self.mapView.selectAnnotation(self.mapPins[0], animated: true)
+                              self.mapView.selectAnnotation(self.mapPins[0], animated: true)
                               
-                              //self.mapView.selectAnnotation(self.mapView.annotations as? MKAnnotation, animated: true)
+                              self.mapView.selectAnnotation(self.mapView.annotations as? MKAnnotation, animated: true)
+                              */
                               
                               // alert the user of the existing location pin
                               var alert = UIAlertController(title: "Existing Pin", message: "You've already posted your location.", preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -248,11 +250,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                          
                     }
                } else {
+                    var downloadFailureAlert = UIAlertController(title: "Query Failed", message: "Unable to download student locations.", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    self.presentViewController(downloadFailureAlert, animated: true, completion: nil)
+
                     println("unable to query existing posts")
                }
-          
           }
-          
      }
      
      // *****************************************************

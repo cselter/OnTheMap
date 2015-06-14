@@ -15,6 +15,7 @@ class LocationSelectionViewController: UIViewController, UITextFieldDelegate {
      @IBOutlet weak var findOnTheMapButton: UIButton!
      @IBOutlet weak var cancelButton: UIButton!
      @IBOutlet weak var locationTextField: UITextField!
+     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
      override func viewDidLoad() {
           findOnTheMapButton.layer.cornerRadius = 5
@@ -36,7 +37,7 @@ class LocationSelectionViewController: UIViewController, UITextFieldDelegate {
      // * Locates address entered and sends to URLMapViewController *
      // *************************************************************
      @IBAction func findOnMapButtonTouchUp(sender: AnyObject) {
-          
+          activityIndicator.startAnimating()
           let address = locationTextField.text as String
           var geocoder = CLGeocoder()
           
@@ -48,10 +49,11 @@ class LocationSelectionViewController: UIViewController, UITextFieldDelegate {
                     // send over the placemark
                     mediaURLViewController.geolocation = placemark
                     mediaURLViewController.mapString = address
-                    
+                    self.activityIndicator.stopAnimating()
                     self.presentViewController(mediaURLViewController, animated: true, completion: nil)
                     
                } else {
+                    self.activityIndicator.stopAnimating()
                     // Unable to identify location, ask user to re-enter
                     var invalidAddress = UIAlertView()
                     invalidAddress.title = "Invalid Location"
