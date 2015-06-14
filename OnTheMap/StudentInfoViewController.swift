@@ -73,7 +73,6 @@ class StudentInfoViewController: UIViewController {
                long = nil
           }
           
-          
           // Update the labels
           nameLabel.text = userfName! + " " + userlName!
           studentKey.text = self.userKey
@@ -91,11 +90,16 @@ class StudentInfoViewController: UIViewController {
                longLabel.text = "not posted yet"
           }
           
+          // Add Pin & Zoom in Map
+          if lat != nil && long != nil {
+               let currLoc = CLLocationCoordinate2DMake(lat!, long!)
+               let mapPin = MKPointAnnotation()
+               mapPin.coordinate = currLoc
+               self.mapView.addAnnotation(mapPin)
+               
+               var zoomInView = MKMapCamera(lookingAtCenterCoordinate: currLoc, fromEyeCoordinate: currLoc, eyeAltitude: 10000.0)
+               self.mapView.setCamera(zoomInView, animated: true)
+          }
      }
-     
-     
-     
-     
-     
 }
 

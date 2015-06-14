@@ -208,7 +208,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                               var zoomView = MKMapCamera(lookingAtCenterCoordinate: existingLoc, fromEyeCoordinate: existingLoc, eyeAltitude: 10000.0)
                               self.mapView.setCamera(zoomView, animated: true)
                               
-                              
                               // Show annotation view after zoomed in
                               // * Still working on this *
                               //NSThread.sleepForTimeInterval(3)

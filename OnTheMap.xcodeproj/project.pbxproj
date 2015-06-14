@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D680CE31B2D4610009E5E1C /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D680CE21B2D4610009E5E1C /* Network.swift */; };
 		9DE931CE1B2368A800C5AD86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE931CD1B2368A800C5AD86 /* AppDelegate.swift */; };
 		9DE931D51B2368A800C5AD86 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DE931D41B2368A800C5AD86 /* Images.xcassets */; };
 		9DE931D81B2368A800C5AD86 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE931D61B2368A800C5AD86 /* LaunchScreen.xib */; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9D680CE21B2D4610009E5E1C /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		9DE931C81B2368A800C5AD86 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DE931CC1B2368A800C5AD86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DE931CD1B2368A800C5AD86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 		9DE931CA1B2368A800C5AD86 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				9D680CE21B2D4610009E5E1C /* Network.swift */,
 				9DE931CD1B2368A800C5AD86 /* AppDelegate.swift */,
 				9DE931F11B236A5B00C5AD86 /* Model */,
 				9DE931F21B236A6E00C5AD86 /* Controller */,
@@ -249,6 +252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D680CE31B2D4610009E5E1C /* Network.swift in Sources */,
 				9DE931EF1B2369D800C5AD86 /* LoginViewController.swift in Sources */,
 				9DE931FA1B249FDF00C5AD86 /* TableViewController.swift in Sources */,
 				9DE932001B2A743000C5AD86 /* URLMapViewController.swift in Sources */,

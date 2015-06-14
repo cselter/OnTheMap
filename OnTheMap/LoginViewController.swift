@@ -64,6 +64,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
      // *********************************
      @IBAction func loginButtonTouchUp(sender: AnyObject) {
           let udacityClient = OTMclient()
+          debugTextLabel.text = ""
           
           udacityClient.loginToUdacity(usernameTextField.text, password: passwordTextField.text){
                success, data, error in

@@ -20,9 +20,6 @@ class OTMclient : NSObject {
      static let ParseAppID : String = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
      static let ParseAPI : String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
      
-     var username: String? = nil // DO I NEED THIS?
-     var sessionID : String? = nil // DO I NEED THIS?
-     
      override init() {
           session = NSURLSession.sharedSession()
           super.init()
@@ -34,6 +31,12 @@ class OTMclient : NSObject {
      // * Login to Udacity to get sessionID *
      // *************************************
      func loginToUdacity(udacityLogin: String, password: String, completionHandler: (success: Bool, data: [String: AnyObject]?, errorString: String?) -> Void) {
+          
+          // Test for network connectivity
+          if Network.isConnectedToNetwork() == false {
+               completionHandler(success: false, data: nil, errorString: "No Network Connectivity")
+               return
+          }
           
           // set up the request
           let request = NSMutableURLRequest(URL: NSURL(string: OTMclient.UdacityLoginURL)!)
