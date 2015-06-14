@@ -19,8 +19,8 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
      
      var mapString: String?
      var geolocation: CLPlacemark!
-     var lat:CLLocationDegrees?
-     var long:CLLocationDegrees?
+     var latCL:CLLocationDegrees?
+     var longCL:CLLocationDegrees?
           
      override func viewDidLoad() {
           submitButton.layer.cornerRadius = 5
@@ -35,10 +35,10 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
      
      override func viewDidAppear(animated: Bool) {
           self.mapView.addAnnotation(MKPlacemark(placemark: geolocation))
-          self.lat = geolocation.location.coordinate.latitude
-          self.long = geolocation.location.coordinate.longitude
+          self.latCL = geolocation.location.coordinate.latitude
+          self.longCL = geolocation.location.coordinate.longitude
           
-          let mapPin = CLLocationCoordinate2DMake(lat!, long!)
+          let mapPin = CLLocationCoordinate2DMake(latCL!, longCL!)
           
           var zoomView =
           MKMapCamera(lookingAtCenterCoordinate: mapPin, fromEyeCoordinate: mapPin, eyeAltitude: 10000.0)
@@ -69,7 +69,7 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
           if finalURL == "" {
                // Empty URL
                var invalidAddress = UIAlertView()
-               invalidAddress.title = "Invalid URL"
+               invalidAddress.title = "Missing URL"
                invalidAddress.message = "Please enter a URL."
                invalidAddress.addButtonWithTitle("OK")
                invalidAddress.show()
@@ -81,12 +81,24 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                     }
 
                let udacityClient = OTMclient()
-          
-               udacityClient.postStudentLocation(finalURL!, lat: lat!, long: long!, mapString: finalURL!) { success in
+               var appDelegate:AppDelegate!
+               appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+               
+               udacityClient.postStudentLocation(finalURL!, lat: latCL!, long: longCL!, mapString: finalURL!) { success in
 
                     if let success = success {
                          if success {
                               canBeDismissed = true
+                              
+                              let updateLat = self.geolocation.location.coordinate.latitude as Double
+                              
+                              let updateLong = self.geolocation.location.coordinate.longitude as Double
+                              
+                              appDelegate.loggedInStudent?.latitude = updateLat
+                              appDelegate.loggedInStudent?.longitude = updateLong
+                              appDelegate.loggedInStudent?.mediaURL = finalURL
+                              
+                              
                          } else {
                               println("unsuccessful post")
                          }

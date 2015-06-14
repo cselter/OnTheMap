@@ -124,7 +124,6 @@ class OTMclient : NSObject {
                                    let nameUpdateDictionary : [String: AnyObject] =
                                    ["firstName" : firstName,
                                         "lastName" : lastName]
-                                   println(studentData)
                                    completionHandler(data: nameUpdateDictionary, errorString: nil)
                               }
                          }else {
@@ -238,7 +237,7 @@ class OTMclient : NSObject {
                     return
                }
                
-               println(NSString(data: data, encoding: NSUTF8StringEncoding))
+               // println(NSString(data: data, encoding: NSUTF8StringEncoding))
                completionHandler(success: true)
           }
           task.resume()
@@ -266,9 +265,10 @@ class OTMclient : NSObject {
                     /* Handle error */
                     return
                }
-               // use the data
-               //println(NSString(data: data, encoding: NSUTF8StringEncoding))
+               // debug: print data
+               // println(NSString(data: data, encoding: NSUTF8StringEncoding))
                
+               // use the data
                var parsingError: NSError? = nil
                
                let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
@@ -280,12 +280,9 @@ class OTMclient : NSObject {
                          completionHandler(data: locations, errorString: nil)
                     }
                }
-
           }
           task.resume()
      }
-     
-     
      
      // *************************
      // * Delete existing posts *
@@ -296,10 +293,8 @@ class OTMclient : NSObject {
      
           for loc in data {
                locArr.append(loc)
-               println(loc["objectId"]!)
-               
                let objID = loc["objectId"] as? String
-               println(objID)
+
                let urlString = "https://api.parse.com/1/classes/StudentLocation/\(objID!)"
                let url = NSURL(string: urlString)
                let request = NSMutableURLRequest(URL: url!)
@@ -311,18 +306,13 @@ class OTMclient : NSObject {
                let session = NSURLSession.sharedSession()
                let task = session.dataTaskWithRequest(request) { data, response, error in
                     if error != nil { // Handle error…
-                    return
+                         println("unable to delete")
+                         return
                     }
-          
-                    println(NSString(data: data, encoding: NSUTF8StringEncoding))
                }
                task.resume()
           }
      }
-     
-     
-     
-     
      
      /* Helper function: Given a dictionary of parameters, convert to a string for a url */
      class func escapedParameters(parameters: [String : AnyObject]) -> String {

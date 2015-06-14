@@ -19,6 +19,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
      
      var appDelegate: AppDelegate!
      var userKey: String?
+     var mapPins = [MKAnnotation]()
      
      override func viewDidLoad() {
           super.viewDidLoad()
@@ -34,9 +35,22 @@ class MapViewController: UIViewController, MKMapViewDelegate {
      
      override func viewDidAppear(animated: Bool) {
           super.viewDidAppear(true)
-          addStudentMapPins()
           // TODO: ACTIVITY VIEW?
+          
+          getStudentLocationData()
+          addStudentMapPins()
+          defaultZoom()
+     }
 
+     // *********************************
+     // * Zoom Out & Pan back to the US *
+     // *********************************
+     func defaultZoom(){
+          var latOut: Double = 37.13284
+          var longOut: Double = -95.78558
+          let zoomOut = CLLocationCoordinate2DMake(latOut, longOut)
+          var zoomOutView = MKMapCamera(lookingAtCenterCoordinate: zoomOut, fromEyeCoordinate: zoomOut, eyeAltitude: 18000000.0)
+          self.mapView.setCamera(zoomOutView, animated: true)
      }
      
      // ********************************************
@@ -79,9 +93,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                          if self.mapView.annotations.count > 0 {
                               // if pins already exist, clear them out before loading new ones
                               self.mapView.removeAnnotations(self.mapView.annotations)
+                              self.mapPins.removeAll(keepCapacity: false)
                          }
                          
-                         var mapPins = [MKAnnotation]()
+                         // var mapPins = [MKAnnotation]()
                          
                          for students in studentMapPins {
                               // ensure all data is present before loading pin
@@ -98,17 +113,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                                                        mapPin.title = "\(fName) \(lName)"
                                                        mapPin.subtitle = studentURL
                                                        
-                                                       mapPins.append(mapPin)
+                                                       self.mapPins.append(mapPin)
                                                   }
                                              }
                                         }
                                    }
                               }
                               
-                              if mapPins.count == 0 {
+                              if self.mapPins.count == 0 {
                                    println("No pins in the array")
                               } else {
-                                   self.mapView.addAnnotations(mapPins)
+                                   self.mapView.addAnnotations(self.mapPins)
                               }
                          }
                     } else {
@@ -181,33 +196,57 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                if error == nil { // if no error
                     if let data = data { // and data is not nil
                          if data.count > 0 { // and count of objects is >0
-                              // existing posts found, alert user
-                              // TODO: ZOOM TO LOCATION
-                              var alert = UIAlertController(title: "Existing Pin", message: "You've already posted your location.", preferredStyle: UIAlertControllerStyle.Alert)
-                              alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-                              self.presentViewController(alert, animated: true, completion: nil)
-                              alert.addAction(UIAlertAction(title: "Delete & Post New", style: .Default, handler: { action in
-                                   switch action.style{
-                                   case .Default:
-                                        println("default")
-                                        client.deleteExistingPosts(data)
-                                        // SEGUE TO LOCATION ENTRY
-                                        self.performSegueWithIdentifier("OpenLocationSelectVC", sender: self)
-                                   case .Cancel:
-                                        println("cancel")
-                                        self.dismissViewControllerAnimated(true, completion: nil)
-                                   case .Destructive:
-                                        println("destructive")
-                                   }
+                              // existing posts found
+                              // zoom to existing pin
+                              var lat: Double = data[0]["latitude"] as! Double
+                              var long: Double = data[0]["longitude"] as! Double
+                              
+                              var latCord: CLLocationDegrees = lat
+                              var longCord: CLLocationDegrees = long
+
+                              let existingLoc = CLLocationCoordinate2DMake(latCord, longCord)
+                              var zoomView = MKMapCamera(lookingAtCenterCoordinate: existingLoc, fromEyeCoordinate: existingLoc, eyeAltitude: 10000.0)
+                              self.mapView.setCamera(zoomView, animated: true)
+                              
+                              
+                              // Show annotation view after zoomed in
+                              // * Still working on this *
+                              //NSThread.sleepForTimeInterval(3)
+                              
+                              //let anns = self.mapView.annotationsInMapRect(self.mapView.visibleMapRect) as? MKAnnotation
+                              
+                              //println(anns)
+                              
+                              //self.mapView.selectAnnotation(self.mapPins[0], animated: true)
+                              
+                              //self.mapView.selectAnnotation(self.mapView.annotations as? MKAnnotation, animated: true)
+                              
+                              // alert the user of the existing location pin
+                              var alert = UIAlertController(title: "Existing Pin", message: "You've already posted your location.", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                              
+                              alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
+                                   self.defaultZoom()
                               }))
+
+                              alert.addAction(UIAlertAction(title: "Delete & Post New", style: .Default, handler: { action in
+                                   client.deleteExistingPosts(data)
+                                   // Segue to Location Entry
+                                   self.performSegueWithIdentifier("OpenLocationSelectVC", sender: self)
+                              }))
+                              
+                              self.presentViewController(alert, animated: true, completion: nil)
+                              
                          } else {
                               self.performSegueWithIdentifier("OpenLocationSelectVC", sender: self)
                          }
+                         
                     }
                } else {
                     println("unable to query existing posts")
                }
+          
           }
+          
      }
      
      // *****************************************************

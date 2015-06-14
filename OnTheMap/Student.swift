@@ -15,8 +15,8 @@ struct Student {
      var studentKey: String?
      var studentURL: String? // from Udacity profile
      var mediaURL: String? // from Parse API
-     var latitude: Float?
-     var longitude: Float?
+     var latitude: Double?
+     var longitude: Double?
 
      init(studentData: [String: AnyObject]?) {
           
@@ -41,11 +41,11 @@ struct Student {
                     self.mediaURL = mediaURL
                }
                
-               if let latitude = studentData["latitude"] as? Float {
+               if let latitude = studentData["latitude"] as? Double {
                     self.latitude = latitude
                }
 
-               if let longitude = studentData["longitude"] as? Float {
+               if let longitude = studentData["longitude"] as? Double {
                     self.longitude = longitude
                } 
           }

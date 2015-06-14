@@ -24,8 +24,8 @@ class StudentInfoViewController: UIViewController {
      var userfName: String?
      var userlName: String?
      var userKey: String?
-     var lat: Float?
-     var long: Float?
+     var lat: Double?
+     var long: Double?
      var loc: CLPlacemark?
      var mediaURL: String?
      
@@ -80,13 +80,13 @@ class StudentInfoViewController: UIViewController {
           mediaURLLabel.text = self.mediaURL
           
           if lat != nil {
-               latLabel.text = String(stringInterpolationSegment: self.lat)
+               latLabel.text = String(stringInterpolationSegment: self.lat!)
           } else {
                latLabel.text = "not posted yet"
           }
           
           if long != nil {
-               longLabel.text = String(stringInterpolationSegment: self.long)
+               longLabel.text = String(stringInterpolationSegment: self.long!)
           } else {
                longLabel.text = "not posted yet"
           }
