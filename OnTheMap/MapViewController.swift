@@ -16,10 +16,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
      @IBOutlet weak var logoutButton: UIBarButtonItem!
      @IBOutlet weak var locationButton: UIBarButtonItem!
      @IBOutlet weak var refreshButton: UIBarButtonItem!
+     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
      
      var appDelegate: AppDelegate!
      var userKey: String?
      var mapPins = [MKAnnotation]()
+     var blurEffectView: UIVisualEffectView!
      
      override func viewDidLoad() {
           super.viewDidLoad()
@@ -27,19 +29,22 @@ class MapViewController: UIViewController, MKMapViewDelegate {
           appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
           userKey = appDelegate.loggedInStudent?.studentKey
           mapView.delegate = self
-          // TODO: disables interactions so data can load... change to loading screen?
-          UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+
+          blurActivityView()
+          activityIndicator.startAnimating()
+          
           getStudentLocationData()
-          UIApplication.sharedApplication().endIgnoringInteractionEvents()
      }
      
      override func viewDidAppear(animated: Bool) {
           super.viewDidAppear(true)
-          // TODO: ACTIVITY VIEW?
           
           getStudentLocationData()
           addStudentMapPins()
           defaultZoom()
+          
+          removeBlur()
+          activityIndicator.stopAnimating()
      }
 
      // *********************************
@@ -137,8 +142,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
      // * Get fresh data from API and reload map pins *
      // ***********************************************
      @IBAction func reloadButtonTouchUp(sender: AnyObject) {
+          activityIndicator.startAnimating()
           getStudentLocationData()
           addStudentMapPins()
+          activityIndicator.stopAnimating()
      }
      
      // *************************************************
@@ -258,5 +265,24 @@ class MapViewController: UIViewController, MKMapViewDelegate {
           openSession.logoutOfUdacity()
           self.dismissViewControllerAnimated(true, completion: nil)
           
+     }
+     
+     // ***********************************
+     // * Blur Activity View During Login *
+     // ***********************************
+     func blurActivityView() {
+          let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+          blurEffectView = UIVisualEffectView(effect: blurEffect)
+          blurEffectView.frame = view.bounds
+          blurEffectView.alpha = 0.5
+          view.addSubview(blurEffectView)
+     }
+     
+     func removeBlur() {
+          dispatch_async(dispatch_get_main_queue(), {
+               if self.blurEffectView != nil {
+                    self.blurEffectView.removeFromSuperview()
+               }
+          })
      }
 }

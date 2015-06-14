@@ -201,7 +201,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="qgz-fQ-Vv8"/>
                                     <barButtonItem image="pin" id="mZg-Oa-vcz">
                                         <connections>
-                                            <segue destination="Vdk-sc-6vf" kind="presentation" id="Odb-WS-Jrc"/>
+                                            <action selector="locationButtonTouchUp:" destination="ZZF-cm-Mfx" id="ROa-bY-pbC"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem systemItem="refresh" id="vbx-Fd-PfS">
@@ -232,6 +232,7 @@
                         <outlet property="logoutButton" destination="ExG-25-NSM" id="Zpk-PN-u5T"/>
                         <outlet property="refreshButton" destination="vbx-Fd-PfS" id="COD-8O-xGW"/>
                         <outlet property="tableView" destination="kVv-xv-AJz" id="WjP-a7-R4F"/>
+                        <segue destination="Vdk-sc-6vf" kind="presentation" identifier="OpenLocationSelectVCfromTable" id="8K6-3y-Fht"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OT1-0q-PEZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -389,15 +390,6 @@
                                     <action selector="cancelButtonTouchUp:" destination="QNV-yb-lai" eventType="touchUpInside" id="uo6-vo-v6P"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="http://www.google.com" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h8n-va-Zo7">
-                                <rect key="frame" x="16" y="79" width="568" height="49"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="49" id="bkq-9d-h8b"/>
-                                </constraints>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HAn-RZ-c1r">
                                 <rect key="frame" x="16" y="20" width="107" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -409,17 +401,32 @@
                                     <action selector="editLocationButtonTouchUp:" destination="QNV-yb-lai" eventType="touchUpInside" id="AnY-N7-3kF"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="http://www.google.com" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h8n-va-Zo7">
+                                <rect key="frame" x="16" y="79" width="568" height="49"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="bkq-9d-h8b"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="4QL-03-XJD">
+                                <rect key="frame" x="282" y="378" width="37" height="37"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.27223835759999998" green="0.50337455180000001" blue="0.71913253119999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="h8n-va-Zo7" firstAttribute="centerX" secondItem="wql-kB-U0B" secondAttribute="centerX" id="2LF-Tk-IuN"/>
                             <constraint firstItem="Mb0-bU-JyM" firstAttribute="top" secondItem="R3l-sk-4QS" secondAttribute="bottom" id="4UA-gY-f4w"/>
                             <constraint firstAttribute="trailing" secondItem="t0a-E8-RBi" secondAttribute="trailing" id="Iqd-IA-m0v"/>
+                            <constraint firstItem="4QL-03-XJD" firstAttribute="centerX" secondItem="wql-kB-U0B" secondAttribute="centerX" id="Kzq-Un-Cfj"/>
                             <constraint firstItem="t0a-E8-RBi" firstAttribute="top" secondItem="h8n-va-Zo7" secondAttribute="bottom" constant="66" id="MZz-GB-hLz"/>
                             <constraint firstItem="wql-kB-U0B" firstAttribute="centerX" secondItem="t0a-E8-RBi" secondAttribute="centerX" id="OQa-pj-hDG"/>
                             <constraint firstItem="HAn-RZ-c1r" firstAttribute="leading" secondItem="h8n-va-Zo7" secondAttribute="leading" id="UIw-xl-zKH"/>
                             <constraint firstItem="t0a-E8-RBi" firstAttribute="bottom" secondItem="bi7-0t-5yU" secondAttribute="top" id="aXC-ID-FDs"/>
                             <constraint firstItem="bi7-0t-5yU" firstAttribute="top" secondItem="wql-kB-U0B" secondAttribute="bottom" constant="52" id="cYL-ZA-1f9"/>
+                            <constraint firstAttribute="bottom" secondItem="4QL-03-XJD" secondAttribute="bottom" constant="185" id="hFU-0A-a9S"/>
                             <constraint firstItem="t0a-E8-RBi" firstAttribute="leading" secondItem="Np4-h9-bfd" secondAttribute="leading" id="hlo-z0-WWW"/>
                             <constraint firstItem="Mb0-bU-JyM" firstAttribute="baseline" secondItem="HAn-RZ-c1r" secondAttribute="baseline" id="iBl-E0-wUy"/>
                             <constraint firstItem="HAn-RZ-c1r" firstAttribute="leading" secondItem="Np4-h9-bfd" secondAttribute="leadingMargin" id="oRI-nG-4HR"/>
@@ -428,6 +435,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="4QL-03-XJD" id="9eg-bk-tdf"/>
                         <outlet property="cancelButton" destination="Mb0-bU-JyM" id="Gnr-c3-BxZ"/>
                         <outlet property="mapView" destination="t0a-E8-RBi" id="ZSN-gh-lp9"/>
                         <outlet property="mediaURLtextField" destination="h8n-va-Zo7" id="f7U-vh-rmD"/>
@@ -480,22 +488,29 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="B3g-kz-TMc">
+                                <rect key="frame" x="282" y="291" width="37" height="37"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="5aI-2z-Nyv" secondAttribute="trailing" id="1CH-Vy-2Uz"/>
                             <constraint firstItem="VFq-XE-8Kd" firstAttribute="top" secondItem="daT-E2-ybW" secondAttribute="bottom" constant="11" id="228-0l-zQO"/>
+                            <constraint firstItem="B3g-kz-TMc" firstAttribute="centerX" secondItem="VFq-XE-8Kd" secondAttribute="centerX" id="5q7-nM-fMW"/>
                             <constraint firstItem="f6e-hy-UYL" firstAttribute="top" secondItem="5aI-2z-Nyv" secondAttribute="top" id="LKP-Q5-fI7"/>
                             <constraint firstItem="f6e-hy-UYL" firstAttribute="leading" secondItem="5aI-2z-Nyv" secondAttribute="leading" id="Nfi-fx-c9a"/>
                             <constraint firstItem="5aI-2z-Nyv" firstAttribute="centerX" secondItem="VFq-XE-8Kd" secondAttribute="centerX" id="NlY-k5-nAx"/>
                             <constraint firstItem="5aI-2z-Nyv" firstAttribute="top" secondItem="daT-E2-ybW" secondAttribute="bottom" id="RPU-uD-Bwq"/>
                             <constraint firstItem="f6e-hy-UYL" firstAttribute="trailing" secondItem="5aI-2z-Nyv" secondAttribute="trailing" id="aLt-lo-p8s"/>
+                            <constraint firstItem="cQO-ct-EiX" firstAttribute="top" secondItem="B3g-kz-TMc" secondAttribute="bottom" constant="223" id="h4w-67-sHH"/>
                             <constraint firstAttribute="bottom" secondItem="f6e-hy-UYL" secondAttribute="bottom" id="jlT-UQ-Pvg"/>
                             <constraint firstItem="5aI-2z-Nyv" firstAttribute="leading" secondItem="VA0-qZ-oOU" secondAttribute="leading" id="ug3-3D-FXz"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map" id="BmJ-12-yG3" userLabel="Map"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="B3g-kz-TMc" id="dGR-8U-sXR"/>
                         <outlet property="locationButton" destination="O0X-DE-aJo" id="cFG-lq-MwB"/>
                         <outlet property="logoutButton" destination="z7Y-J7-sk3" id="ryK-Y4-ZGj"/>
                         <outlet property="mapView" destination="f6e-hy-UYL" id="5RW-AH-cTq"/>
@@ -717,6 +732,6 @@
         <image name="pin" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="d7o-iJ-WeQ"/>
+        <segue reference="8K6-3y-Fht"/>
     </inferredMetricsTieBreakers>
 </document>

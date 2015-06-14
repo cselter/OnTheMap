@@ -16,11 +16,13 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
      @IBOutlet weak var submitButton: UIButton!
      @IBOutlet weak var mapView: MKMapView!
      @IBOutlet weak var mediaURLtextField: UITextField!
+     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
      
      var mapString: String?
      var geolocation: CLPlacemark!
      var latCL:CLLocationDegrees?
      var longCL:CLLocationDegrees?
+     var blurEffectView: UIVisualEffectView!
           
      override func viewDidLoad() {
           submitButton.layer.cornerRadius = 5
@@ -74,6 +76,9 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                invalidAddress.addButtonWithTitle("OK")
                invalidAddress.show()
           } else {
+               blurActivityView()
+               activityIndicator.startAnimating()
+               
                if mediaURLtextField.text.lowercaseString.hasPrefix("http://") || mediaURLtextField.text.lowercaseString.hasPrefix("https://") {
                     finalURL = mediaURLtextField.text
                     } else {
@@ -111,6 +116,8 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                     }
                }
           }
+          removeBlur()
+          activityIndicator.stopAnimating()
      }
      
      // **********************************************************
@@ -128,5 +135,24 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                mediaURLtextField.resignFirstResponder()
           }
           return true
+     }
+     
+     // ***********************************
+     // * Blur Activity View During Login *
+     // ***********************************
+     func blurActivityView() {
+          let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+          blurEffectView = UIVisualEffectView(effect: blurEffect)
+          blurEffectView.frame = view.bounds
+          blurEffectView.alpha = 0.5
+          view.addSubview(blurEffectView)
+     }
+     
+     func removeBlur() {
+          dispatch_async(dispatch_get_main_queue(), {
+               if self.blurEffectView != nil {
+                    self.blurEffectView.removeFromSuperview()
+               }
+          })
      }
 }

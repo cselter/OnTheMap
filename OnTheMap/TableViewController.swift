@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
    
      @IBOutlet var tableView: UITableView!
      @IBOutlet weak var refreshButton: UIBarButtonItem!
@@ -27,6 +27,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
      }
      
      override func viewDidAppear(animated: Bool) {
+          refreshButtonTouchUp(self)
           // give alert to user if no pins are loaded
           if studentList!.count == 0
           {
@@ -36,9 +37,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                emptyMemesAlert.addButtonWithTitle("OK")
                emptyMemesAlert.show()
           }
-          self.tableView.reloadData()
      }
-     
+
      // ********************
      // * Table Cell Count *
      // ********************
@@ -86,7 +86,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
      // * Log out of Udacity Session and Return to Login VC *
      // *****************************************************
      @IBAction func logoutButtonTouchUp(sender: AnyObject) {
-          
           let openSession = OTMclient.sharedInstance()
           openSession.logoutOfUdacity()
           self.dismissViewControllerAnimated(true, completion: nil)
@@ -96,7 +95,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
      // * Refresh the data model *
      // **************************
      @IBAction func refreshButtonTouchUp(sender: AnyObject) {
-          
           let dataClient = OTMclient.sharedInstance()
           
           dataClient.getStudentLocations() {
@@ -111,8 +109,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                               studentDataArr.append(Student(studentData: studentResults))
                          }
                          appDelegate.allStudents = studentDataArr
-                         
                          self.studentList = studentDataArr
+                         self.reloadTableData()
                     }
                } else {
                     if let error = errorString {
@@ -120,6 +118,51 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     }
                }
           }
-          self.tableView.reloadData()
+     }
+     
+     // ****************************************************
+     // * Post new student location, checking for existing *
+     // ****************************************************
+     @IBAction func locationButtonTouchUp(sender: AnyObject) {
+          let client = OTMclient.sharedInstance()
+          client.queryForStudentLocation() {
+               data, error in
+               
+               if error == nil { // if no error
+                    if let data = data { // and data is not nil
+                         if data.count > 0 { // and count of objects is >0
+                              // alert the user of the existing location pin
+                              var alert = UIAlertController(title: "Existing Pin", message: "You've already posted your location.", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                              
+                              alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
+                                   
+                              }))
+                              
+                              alert.addAction(UIAlertAction(title: "Delete & Post New", style: .Default, handler: { action in
+                                   client.deleteExistingPosts(data)
+                                   // Segue to Location Entry
+                                   self.performSegueWithIdentifier("OpenLocationSelectVCfromTable", sender: self)
+                              }))
+                              
+                              self.presentViewController(alert, animated: true, completion: nil)
+                         } else {
+                              self.performSegueWithIdentifier("OpenLocationSelectVCfromTable", sender: self)
+                         }
+                    }
+               } else {
+                    println("unable to query existing posts")
+               }
+          }
+     }
+     
+     // ******************************
+     // * Reload the table cell data *
+     // ******************************
+     func reloadTableData() {
+          dispatch_async(dispatch_get_main_queue()) {
+               self.tableView.beginUpdates()
+               self.tableView.reloadData()
+               self.tableView.endUpdates()
+          }
      }
 }
