@@ -94,6 +94,10 @@
                                 <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Hoq-Xt-Xc9">
+                                <rect key="frame" x="282" y="319" width="37" height="37"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.0" blue="0.50196081399917603" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -110,10 +114,12 @@
                             <constraint firstItem="pBX-4F-bmM" firstAttribute="top" secondItem="0CF-hq-7rz" secondAttribute="bottom" constant="22" id="WGB-47-0lT"/>
                             <constraint firstAttribute="centerX" secondItem="Xh7-eF-QMX" secondAttribute="centerX" constant="-0.5" id="XYV-8y-DiX"/>
                             <constraint firstItem="1da-MF-yyu" firstAttribute="trailing" secondItem="Uph-q9-pjv" secondAttribute="trailing" constant="-170" id="aRA-6x-BbT"/>
+                            <constraint firstItem="Uph-q9-pjv" firstAttribute="top" secondItem="Hoq-Xt-Xc9" secondAttribute="bottom" constant="28" id="b0N-Hf-awG"/>
                             <constraint firstItem="Uph-q9-pjv" firstAttribute="top" secondItem="1da-MF-yyu" secondAttribute="bottom" constant="8" symbolic="YES" id="bsO-OV-rqq"/>
                             <constraint firstItem="1da-MF-yyu" firstAttribute="leading" secondItem="7hW-cK-ARV" secondAttribute="leading" id="eWI-Rg-Fjj"/>
                             <constraint firstItem="1da-MF-yyu" firstAttribute="top" secondItem="7hW-cK-ARV" secondAttribute="bottom" constant="20" id="eXh-eD-CUJ"/>
                             <constraint firstItem="Xh7-eF-QMX" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="77" id="gJd-Xd-qSd"/>
+                            <constraint firstItem="Hoq-Xt-Xc9" firstAttribute="centerX" secondItem="1da-MF-yyu" secondAttribute="centerX" id="iaG-a6-FRQ"/>
                             <constraint firstItem="1da-MF-yyu" firstAttribute="leading" secondItem="Uph-q9-pjv" secondAttribute="leading" constant="171" id="lfz-jh-6Td"/>
                             <constraint firstItem="zHi-Qw-nVP" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="owO-SI-XHu"/>
                             <constraint firstItem="7hW-cK-ARV" firstAttribute="trailing" secondItem="1da-MF-yyu" secondAttribute="trailing" id="rBX-c7-TvL"/>
@@ -122,6 +128,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="Hoq-Xt-Xc9" id="gFx-ce-hR6"/>
                         <outlet property="debugTextLabel" destination="Uph-q9-pjv" id="dUR-Gd-Cou"/>
                         <outlet property="loginButton" destination="7hW-cK-ARV" id="nka-m6-ktG"/>
                         <outlet property="passwordTextField" destination="pBX-4F-bmM" id="jet-EQ-eEf"/>

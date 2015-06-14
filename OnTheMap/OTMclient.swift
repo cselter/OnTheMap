@@ -33,11 +33,12 @@ class OTMclient : NSObject {
      func loginToUdacity(udacityLogin: String, password: String, completionHandler: (success: Bool, data: [String: AnyObject]?, errorString: String?) -> Void) {
           
           // Test for network connectivity
+          dispatch_async(dispatch_get_main_queue()) {
           if Network.isConnectedToNetwork() == false {
                completionHandler(success: false, data: nil, errorString: "No Network Connectivity")
                return
           }
-          
+          }
           // set up the request
           let request = NSMutableURLRequest(URL: NSURL(string: OTMclient.UdacityLoginURL)!)
           request.HTTPMethod = "POST"

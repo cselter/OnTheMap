@@ -11,7 +11,6 @@ import Foundation
 public class Network {
      
      class func isConnectedToNetwork()->Bool{
-          
           var Status:Bool = false
           let url = NSURL(string: "http://www.google.com/")
           let request = NSMutableURLRequest(URL: url!)

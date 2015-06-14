@@ -14,9 +14,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
      @IBOutlet weak var passwordTextField: UITextField!
      @IBOutlet weak var loginButton: UIButton!
      @IBOutlet weak var debugTextLabel: UILabel!
+     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
      
      var appDelegate: AppDelegate!
      var session: NSURLSession!
+     var blurEffectView: UIVisualEffectView!
      
      override func viewDidLoad() {
           super.viewDidLoad()
@@ -32,6 +34,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
      }
      
      override func viewDidAppear(animated: Bool) {
+          self.removeBlur()
           super.viewWillAppear(animated)
           self.debugTextLabel.text = ""
           
@@ -63,13 +66,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
      // * Initiate Login to Udacity API *
      // *********************************
      @IBAction func loginButtonTouchUp(sender: AnyObject) {
+          
+          activityIndicator.startAnimating()
+          
           let udacityClient = OTMclient()
           debugTextLabel.text = ""
-          
+          blurActivityView()
+
           udacityClient.loginToUdacity(usernameTextField.text, password: passwordTextField.text){
                success, data, error in
                
+               
                if success {
+                    
+                    
                     // update loggedInStudent with returned data (studentKey)
                     self.appDelegate.loggedInStudent = Student(studentData: data)
                     
@@ -82,11 +92,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                else {
                     println("Login Error")
                     println(error)
-                    
                     // shake the screen
                     dispatch_async(dispatch_get_main_queue(), {
                          self.loginFailShake()
                     })
+                    self.activityIndicator.stopAnimating()
+                    self.removeBlur()
                     
                     let missingUserName = "trails.Error 400: Missing parameter \'username\'"
                     let missingPassword = "trails.Error 400: Missing parameter \'password\'"
@@ -134,7 +145,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                self.passwordTextField.text = "" // remove password 
                self.debugTextLabel.text = "Login Success!"
                let controller = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-               
+               self.activityIndicator.stopAnimating()
                self.presentViewController(controller, animated: true, completion: nil)
           })
      }
@@ -173,5 +184,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           anim.duration = 7/100
           
           self.view.layer.addAnimation(anim, forKey: nil)
+     }
+     
+     // ***********************************
+     // * Blur Activity View During Login *
+     // ***********************************
+     func blurActivityView() {
+          let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+          blurEffectView = UIVisualEffectView(effect: blurEffect)
+          blurEffectView.frame = view.bounds
+          blurEffectView.alpha = 0.5
+          view.addSubview(blurEffectView)
+     }
+     
+     func removeBlur() {
+          dispatch_async(dispatch_get_main_queue(), {
+               if self.blurEffectView != nil {
+                    self.blurEffectView.removeFromSuperview()
+               }
+          })
      }
 }
