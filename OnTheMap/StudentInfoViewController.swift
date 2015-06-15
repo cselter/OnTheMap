@@ -14,12 +14,11 @@ class StudentInfoViewController: UIViewController {
      
      @IBOutlet weak var nameLabel: UILabel!
      @IBOutlet weak var studentKey: UILabel!
-     @IBOutlet weak var mediaURLLabel: UILabel!
      @IBOutlet weak var latLabel: UILabel!
      @IBOutlet weak var longLabel: UILabel!
      @IBOutlet weak var mapView: MKMapView!
+     @IBOutlet weak var mediaURLButton: UIButton!
  
-     
      var appDelegate: AppDelegate!
      var userfName: String?
      var userlName: String?
@@ -46,6 +45,36 @@ class StudentInfoViewController: UIViewController {
           checkForExistingLocation()
      }
      
+     // **************************************
+     // * Let user browse existing URL entry *
+     // **************************************
+     @IBAction func mediaURLButtonTouchUp(sender: AnyObject) {
+          var mediaURL:String?
+          println("touch")
+          if mediaURLButton.currentTitle == "<not posted yet>" {
+               var alert = UIAlertView()
+               alert.title = "No Existing Posts"
+               alert.message = "You haven't posted yet."
+               alert.addButtonWithTitle("OK")
+               alert.show()
+          } else {
+               mediaURL = mediaURLButton.currentTitle
+
+               if mediaURL!.lowercaseString.hasPrefix("http://") || mediaURL!.lowercaseString.hasPrefix("https://"){
+                    
+                    if let url = NSURL(string: mediaURL!) {
+                         UIApplication.sharedApplication().openURL(url)
+                    }
+               } else {
+                    let updatedURL = "http://\(mediaURL)"
+                    
+                    if let url = NSURL(string: updatedURL) {
+                         UIApplication.sharedApplication().openURL(url)
+                    }
+               }
+          }
+     }
+     
      // ***************************************
      // * Query for existing student location *
      // ***************************************
@@ -57,8 +86,6 @@ class StudentInfoViewController: UIViewController {
                     if let data = data { // and data is not nil
                          if data.count > 0 { // and count of objects is >0
                               // existing posts found
-                              // zoom to existing pin
-                              
                               var existingLat: Double = data[0]["latitude"] as! Double
                               var existingLong: Double = data[0]["longitude"] as! Double
                               
@@ -77,13 +104,10 @@ class StudentInfoViewController: UIViewController {
                                    
                                    self.longLabel.text = self.appDelegate.loggedInStudent?.longitude?.description
                                    
-                                   self.mediaURLLabel.text = self.appDelegate.loggedInStudent?.mediaURL
+                                   self.mediaURLButton.setTitle(self.appDelegate.loggedInStudent?.mediaURL, forState: UIControlState.Normal)
                               }
-                              var latCord: CLLocationDegrees = existingLat
-                              var longCord: CLLocationDegrees = existingLong
                               
-                              let existingLoc = CLLocationCoordinate2DMake(latCord, longCord)
-                              
+                              // zoom to existing pin
                               self.addPinsAndZoom()
                          }
                     }
@@ -175,5 +199,17 @@ class StudentInfoViewController: UIViewController {
                     self.mapView.setCamera(zoomInView, animated: true)
                }
           }
+     }
+     
+     // *****************************************************
+     // * Log out of Udacity Session and Return to Login VC *
+     // *****************************************************
+     @IBAction func logoutButtonTouchUp(sender: AnyObject) {
+          
+          let openSession = OTMclient.sharedInstance()
+          
+          openSession.logoutOfUdacity()
+          self.dismissViewControllerAnimated(true, completion: nil)
+          
      }
 }

@@ -37,10 +37,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           self.removeBlur()
           super.viewWillAppear(animated)
           self.debugTextLabel.text = ""
-          
-          // TODO: REMOVE THIS!!!!
-          self.usernameTextField.text = "cdotburgess@gmail.com"
-          self.passwordTextField.text = "9cj25h7a"
      }
      
      // ******************************************
@@ -66,9 +62,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
      // * Initiate Login to Udacity API *
      // *********************************
      @IBAction func loginButtonTouchUp(sender: AnyObject) {
-          
           activityIndicator.startAnimating()
-          
           let udacityClient = OTMclient()
           debugTextLabel.text = ""
           blurActivityView()
@@ -76,10 +70,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
           udacityClient.loginToUdacity(usernameTextField.text, password: passwordTextField.text){
                success, data, error in
                
-               
                if success {
-                    
-                    
                     // update loggedInStudent with returned data (studentKey)
                     self.appDelegate.loggedInStudent = Student(studentData: data)
                     

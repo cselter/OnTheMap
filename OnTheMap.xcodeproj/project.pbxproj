@@ -142,9 +142,9 @@
 		9DE931F21B236A6E00C5AD86 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9DE931ED1B2369D800C5AD86 /* LoginViewController.swift */,
 				9DE931F71B2497D200C5AD86 /* MapViewController.swift */,
 				9DE931F91B249FDF00C5AD86 /* TableViewController.swift */,
-				9DE931ED1B2369D800C5AD86 /* LoginViewController.swift */,
 				9DE931F51B237B0100C5AD86 /* StudentInfoViewController.swift */,
 				9DE931FD1B2A713D00C5AD86 /* LocationSelectionViewController.swift */,
 				9DE931FF1B2A743000C5AD86 /* URLMapViewController.swift */,

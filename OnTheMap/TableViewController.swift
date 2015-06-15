@@ -135,7 +135,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                               var alert = UIAlertController(title: "Existing Pin", message: "You've already posted your location.", preferredStyle: UIAlertControllerStyle.ActionSheet)
                               
                               alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
-                                   
                               }))
                               
                               alert.addAction(UIAlertAction(title: "Delete & Post New", style: .Default, handler: { action in
@@ -143,7 +142,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                                    // Segue to Location Entry
                                    self.performSegueWithIdentifier("OpenLocationSelectVCfromTable", sender: self)
                               }))
-                              
                               self.presentViewController(alert, animated: true, completion: nil)
                          } else {
                               self.performSegueWithIdentifier("OpenLocationSelectVCfromTable", sender: self)

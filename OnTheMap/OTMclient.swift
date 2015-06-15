@@ -34,10 +34,10 @@ class OTMclient : NSObject {
           
           // Test for network connectivity
           dispatch_async(dispatch_get_main_queue()) {
-          if Network.isConnectedToNetwork() == false {
-               completionHandler(success: false, data: nil, errorString: "No Network Connectivity")
-               return
-          }
+               if Network.isConnectedToNetwork() == false {
+                    completionHandler(success: false, data: nil, errorString: "No Network Connectivity")
+                    return
+               }
           }
           // set up the request
           let request = NSMutableURLRequest(URL: NSURL(string: OTMclient.UdacityLoginURL)!)
@@ -142,12 +142,10 @@ class OTMclient : NSObject {
           task.resume()
      }
      
-
      // *********************
      // * Logout of Udacity *
      // *********************
      func logoutOfUdacity () {
-
           let request = NSMutableURLRequest(URL: NSURL(string: OTMclient.UdacityLoginURL)!)
           request.HTTPMethod = "DELETE"
           var xsrfCookie: NSHTTPCookie? = nil
@@ -169,8 +167,6 @@ class OTMclient : NSObject {
                
           }
           task.resume()
-          
-          
      }
 
      // ***********************************************
@@ -211,7 +207,6 @@ class OTMclient : NSObject {
      // * Post Student Location to Parse API *
      // **************************************
      func postStudentLocation(enteredURL: String, lat: CLLocationDegrees, long: CLLocationDegrees, mapString: String, completionHandler: (success: Bool?) -> Void) {
-          
           self.appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
           let studentKey = self.appDelegate.loggedInStudent?.studentKey
           let fName = self.appDelegate.loggedInStudent?.firstName
@@ -240,8 +235,6 @@ class OTMclient : NSObject {
                     completionHandler(success:false)
                     return
                }
-               
-               // println(NSString(data: data, encoding: NSUTF8StringEncoding))
                completionHandler(success: true)
           }
           task.resume()
@@ -251,14 +244,12 @@ class OTMclient : NSObject {
      // * Check to see if student has already posted *
      // **********************************************
      func queryForStudentLocation(completionHandler: (data: [[String: AnyObject]]?, errorString: String?) -> Void) {
-          
           appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
           let studentKey = self.appDelegate.loggedInStudent?.studentKey
           
           let urlString = "https://api.parse.com/1/classes/StudentLocation?where=%7B%22uniqueKey%22%3A%22\(studentKey!)%22%7D"
           let url = NSURL(string: urlString)
           let request = NSMutableURLRequest(URL: url!)
-          // TODO: MOVE THESE KEYS TO CONSTANTS
           request.addValue("\(OTMclient.ParseAppID)", forHTTPHeaderField: "X-Parse-Application-Id")
           request.addValue("\(OTMclient.ParseAPI)", forHTTPHeaderField: "X-Parse-REST-API-Key")
           let session = NSURLSession.sharedSession()
@@ -269,8 +260,6 @@ class OTMclient : NSObject {
                     /* Handle error */
                     return
                }
-               // debug: print data
-               // println(NSString(data: data, encoding: NSUTF8StringEncoding))
                
                // use the data
                var parsingError: NSError? = nil
@@ -303,8 +292,8 @@ class OTMclient : NSObject {
                let url = NSURL(string: urlString)
                let request = NSMutableURLRequest(URL: url!)
                request.HTTPMethod = "DELETE"
-               request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-               request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+               request.addValue("\(OTMclient.ParseAppID)", forHTTPHeaderField: "X-Parse-Application-Id")
+               request.addValue("\(OTMclient.ParseAPI)", forHTTPHeaderField: "X-Parse-REST-API-Key")
                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
                
                let session = NSURLSession.sharedSession()

@@ -169,7 +169,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                pinView?.canShowCallout = true
                pinView?.pinColor = .Red
                pinView?.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
-               
           } else {
                pinView?.annotation = annotation
           }
@@ -225,17 +224,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                               self.mapView.setCamera(zoomView, animated: true)
                               
                               // Show annotation view of pin after zoomed in
-                              // * Still working on this *
+                              // * Couldn't get this to work *
+                              // Desired action: after map zooms in to existing pin, have the annotation view (pop up with name and url) automatically show.
+                              // Since I have an ActivitySheet for my alert, the user can't click on it without dismissing the alert.
+                              // If you know of a way to do this, I would love to learn!
                               /*
-                              NSThread.sleepForTimeInterval(3)
-                              
-                              let anns = self.mapView.annotationsInMapRect(self.mapView.visibleMapRect) as? MKAnnotation
-                              
-                              println(anns)
-                              
-                              self.mapView.selectAnnotation(self.mapPins[0], animated: true)
-                              
-                              self.mapView.selectAnnotation(self.mapView.annotations as? MKAnnotation, animated: true)
+                                   let anns = self.mapView.annotationsInMapRect(self.mapView.visibleMapRect) as? MKAnnotation
+                                   
+                                   self.mapView.selectAnnotation(self.mapPins[0], animated: true)
+                                   
+                                   self.mapView.selectAnnotation(self.mapView.annotations as? MKAnnotation, animated: true)
                               */
                               
                               // alert the user of the existing location pin
@@ -256,13 +254,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                          } else {
                               self.performSegueWithIdentifier("OpenLocationSelectVC", sender: self)
                          }
-                         
                     }
                } else {
                     var downloadFailureAlert = UIAlertController(title: "Query Failed", message: "Unable to download student locations.", preferredStyle: UIAlertControllerStyle.Alert)
-                    
                     self.presentViewController(downloadFailureAlert, animated: true, completion: nil)
-
                     println("unable to query existing posts")
                }
           }
@@ -272,12 +267,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
      // * Log out of Udacity Session and Return to Login VC *
      // *****************************************************
      @IBAction func logoutButtonTouchUp(sender: AnyObject) {
-
           let openSession = OTMclient.sharedInstance()
-          
           openSession.logoutOfUdacity()
           self.dismissViewControllerAnimated(true, completion: nil)
-          
      }
      
      // ***********************************

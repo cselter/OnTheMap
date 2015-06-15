@@ -8,6 +8,9 @@
 
 import Foundation
 
+// ****************************************************
+// * Check for network connectivity before logging in *
+// ****************************************************
 public class Network {
      
      class func isConnectedToNetwork()->Bool{
