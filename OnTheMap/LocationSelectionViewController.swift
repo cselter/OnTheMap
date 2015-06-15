@@ -53,11 +53,18 @@ class LocationSelectionViewController: UIViewController, UITextFieldDelegate {
                     self.presentViewController(mediaURLViewController, animated: true, completion: nil)
                     
                } else {
+                    println(error)
                     self.activityIndicator.stopAnimating()
-                    // Unable to identify location, ask user to re-enter
+                    // Unable to identify location, ask user to re-enter or connect to network
                     var invalidAddress = UIAlertView()
-                    invalidAddress.title = "Invalid Location"
-                    invalidAddress.message = "Unable to identify location. Please re-enter."
+                    if error.description.hasPrefix("Error Domain=kCLErrorDomain Code=2") {
+                         invalidAddress.title = "No Network Connection"
+                         invalidAddress.message = "Unable to connect to a network."
+                    } else {
+                         invalidAddress.title = "Invalid Location"
+                         invalidAddress.message = "Unable to identify location. Please re-enter."
+                    }
+
                     invalidAddress.addButtonWithTitle("OK")
                     invalidAddress.show()
                }

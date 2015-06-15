@@ -29,7 +29,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
           appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
           userKey = appDelegate.loggedInStudent?.studentKey
           mapView.delegate = self
-
+          
           blurActivityView()
           activityIndicator.startAnimating()
           
@@ -101,8 +101,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                               self.mapPins.removeAll(keepCapacity: false)
                          }
                          
-                         // var mapPins = [MKAnnotation]()
-                         
                          for students in studentMapPins {
                               // ensure all data is present before loading pin
                               if let long = students.longitude {
@@ -133,6 +131,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                          }
                     } else {
                          println("No student data in appDelegate")
+                         
+                         var failedPostAlert = UIAlertController(title: "No Student Data", message: "Retry?", preferredStyle: UIAlertControllerStyle.Alert)
+                         
+                         failedPostAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
+                         }))
+                         
+                         failedPostAlert.addAction(UIAlertAction(title: "Retry", style: .Default, handler: { action in
+                              self.reloadButtonTouchUp(self)
+                         }))
+                         
+                         self.presentViewController(failedPostAlert, animated: true, completion: nil)
                     }
                }
           }

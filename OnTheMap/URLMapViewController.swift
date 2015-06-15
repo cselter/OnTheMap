@@ -68,7 +68,7 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
           var finalURL: String?
           var canBeDismissed: Bool = false
           
-          if finalURL == "" {
+          if mediaURLtextField.text == "" || mediaURLtextField.text == "http://" || mediaURLtextField.text == "https://" {
                // Empty URL
                var invalidAddress = UIAlertView()
                invalidAddress.title = "Missing URL"
@@ -80,9 +80,9 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                activityIndicator.startAnimating()
                
                if mediaURLtextField.text.lowercaseString.hasPrefix("http://") || mediaURLtextField.text.lowercaseString.hasPrefix("https://") {
-                    finalURL = mediaURLtextField.text
+                         finalURL = mediaURLtextField.text
                     } else {
-                    finalURL = "http://\(mediaURLtextField.text)"
+                         finalURL = "http://\(mediaURLtextField.text)"
                     }
 
                let udacityClient = OTMclient()
@@ -102,8 +102,6 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                               appDelegate.loggedInStudent?.latitude = updateLat
                               appDelegate.loggedInStudent?.longitude = updateLong
                               appDelegate.loggedInStudent?.mediaURL = finalURL
-                              
-                              
                          } else {
                               println("unsuccessful post")
                               var failedPostAlert = UIAlertController(title: "Unable to Post", message: "Retry?", preferredStyle: UIAlertControllerStyle.Alert)
@@ -115,10 +113,7 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                                    self.submitButtonTouchUp(self)
                               }))
 
-                              
-                              
                               self.presentViewController(failedPostAlert, animated: true, completion: nil)
-
                          }
                     }
                     
@@ -131,6 +126,32 @@ class URLMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
           }
           removeBlur()
           activityIndicator.stopAnimating()
+     }
+     
+     // *****************************************************************
+     // * Allows user to test the URL they've entered before submitting *
+     // *****************************************************************
+     @IBAction func checkURLButtonTouchUp(sender: AnyObject) {
+          var testURL: String?
+          
+          if mediaURLtextField.text == "" || mediaURLtextField.text == "http://" || mediaURLtextField.text == "https://" {
+               // Empty URL
+               var invalidAddress = UIAlertView()
+               invalidAddress.title = "Missing URL"
+               invalidAddress.message = "Please enter a URL."
+               invalidAddress.addButtonWithTitle("OK")
+               invalidAddress.show()
+          } else {
+               if mediaURLtextField.text.lowercaseString.hasPrefix("http://") || mediaURLtextField.text.lowercaseString.hasPrefix("https://") {
+                    testURL = mediaURLtextField.text
+               } else {
+                    testURL = "http://\(mediaURLtextField.text)"
+               }
+               
+               if let url = NSURL(string: testURL!) {
+                    UIApplication.sharedApplication().openURL(url)
+               }
+          }
      }
      
      // **********************************************************
